@@ -1,6 +1,7 @@
-package model;
+package com.argprogr.portfolioweb.model;
 
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -14,13 +15,12 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import lombok.AllArgsConstructor;
+import lombok.Data;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-@Getter
-@Setter
-@AllArgsConstructor
+@Data
 @NoArgsConstructor
 @Entity
 @Table(name = "persona")
@@ -39,7 +39,13 @@ public class Persona {
 	@Lob
 	private String descripcion;
 	private String telefono;
-	private LocalDate fechaNac;
+	private String fechaNac;
+	
+	/* TODO Parsear fecha
+	 * DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy/MM/dd");
+		LocalDate localDate = LocalDate.parse(dto.getCreationDate(), formatter );
+	 */
+	
 	//@Column(nullable = true)
 	private String repoURL;
 	//@Column(nullable = true)
@@ -48,13 +54,14 @@ public class Persona {
 	private String websiteURL;
 	@Lob
 	private String fotoURL;
+	/*
 	@OneToMany(mappedBy = "persona", orphanRemoval = true)
 	private List<Trabajo> trabajos = new ArrayList<Trabajo>();
 	@OneToMany(mappedBy = "persona", orphanRemoval = true)
 	private List<Educacion> formaciones = new ArrayList<Educacion>();
 	@OneToMany(mappedBy = "persona", orphanRemoval = true)
 	private List<Proyecto> proyectos = new ArrayList<Proyecto>();
-	
+	*/
 	
 	
 

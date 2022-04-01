@@ -1,14 +1,14 @@
-package service;
+package com.argprogr.portfolioweb.service;
 
 import java.util.List;
 
-import model.Educacion;
+import com.argprogr.portfolioweb.model.Educacion;
 
 public interface IEducacionService {
 	
 	public void saveEducacion (Educacion educacion);
 	
-	public void updateEducacion(Long id, Educacion educacion);
+	public Educacion updateEducacion(Long id, Educacion educacion);
 	
 	public List<Educacion> getEducacions();
 	

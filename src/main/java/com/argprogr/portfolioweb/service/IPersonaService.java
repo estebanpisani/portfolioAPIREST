@@ -1,14 +1,14 @@
-package service;
+package com.argprogr.portfolioweb.service;
 
 import java.util.List;
 
-import model.Persona;
+import com.argprogr.portfolioweb.model.Persona;
 
 public interface IPersonaService {
 	
 	public void savePersona (Persona persona);
 	
-	public void updatePersona(Long id, Persona persona);
+	public Persona updatePersona(Long id, Persona persona);
 	
 	public List<Persona> getPersonas();
 	

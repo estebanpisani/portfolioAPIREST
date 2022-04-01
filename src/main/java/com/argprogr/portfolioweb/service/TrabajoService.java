@@ -1,12 +1,12 @@
-package service;
+package com.argprogr.portfolioweb.service;
 
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import model.Trabajo;
-import repository.TrabajoRepository;
+import com.argprogr.portfolioweb.model.Trabajo;
+import com.argprogr.portfolioweb.repository.TrabajoRepository;
 
 @Service
 public class TrabajoService implements ITrabajoService{
@@ -20,9 +20,10 @@ public class TrabajoService implements ITrabajoService{
 	}
 
 	@Override
-	public void updateTrabajo(Long id, Trabajo trabajo) {
-		// TODO Auto-generated method stub
-		
+	public Trabajo updateTrabajo(Long id, Trabajo trabajo) {
+		// TODO desarrollar updateTrabajo
+		return null;
+
 	}
 
 	@Override

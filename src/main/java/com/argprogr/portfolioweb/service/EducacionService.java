@@ -1,12 +1,12 @@
-package service;
+package com.argprogr.portfolioweb.service;
 
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import model.Educacion;
-import repository.EducacionRepository;
+import com.argprogr.portfolioweb.model.Educacion;
+import com.argprogr.portfolioweb.repository.EducacionRepository;
 
 @Service
 public class EducacionService implements IEducacionService {
@@ -20,9 +20,9 @@ public void saveEducacion(Educacion educacion) {
 }
 
 @Override
-public void updateEducacion(Long id, Educacion educacion) {
-	// TODO Auto-generated method stub
-	
+public Educacion updateEducacion(Long id, Educacion educacion) {
+	// TODO desarrollar updateEducation
+	return null;
 }
 
 @Override

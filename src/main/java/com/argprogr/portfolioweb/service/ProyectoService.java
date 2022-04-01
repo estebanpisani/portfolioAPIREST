@@ -1,15 +1,15 @@
-package service;
+package com.argprogr.portfolioweb.service;
 
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import model.Proyecto;
-import repository.ProyectoRepository;
+import com.argprogr.portfolioweb.model.Proyecto;
+import com.argprogr.portfolioweb.repository.ProyectoRepository;
 
 @Service
-public class ProyectosService implements IProyectoService {
+public class ProyectoService implements IProyectoService {
 	
 	@Autowired
 	ProyectoRepository proyectoRepo;
@@ -20,9 +20,9 @@ public class ProyectosService implements IProyectoService {
 	}
 
 	@Override
-	public void updateProyecto(Long id, Proyecto proyecto) {
-		// TODO Auto-generated method stub
-		
+	public Proyecto updateProyecto(Long id, Proyecto proyecto) {
+		// TODO updateProyecto
+		return null;
 	}
 
 	@Override

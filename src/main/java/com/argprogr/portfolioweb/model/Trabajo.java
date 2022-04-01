@@ -1,4 +1,6 @@
-package model;
+package com.argprogr.portfolioweb.model;
+
+import java.time.LocalDate;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -11,21 +13,30 @@ import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
 
 import lombok.Data;
+
 @Data
 @Entity
-public class Proyecto {
+public class Trabajo {
 	
-	@Column(name = "id_proyecto")
+	@Column(name = "id_trabajo")
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE)
 	private Long id;
 	@Column( nullable = false)
-	private String nombreProyecto;
+	private String nombreEmpresa;
+	private String puesto;
 	@Lob
 	private String descripcion;
+	/*
+	 * TODO cambiar a LocalDate
+	 */
+	private String fechaInicio;
+	private String fechaFin;
 	private String websiteURL;
+	/*
 	@ManyToOne(cascade = CascadeType.PERSIST)
 	@JoinColumn(name = "fk_persona")
 	private Persona persona;
-
+	*/
+	
 }

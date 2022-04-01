@@ -1,14 +1,14 @@
-package service;
+package com.argprogr.portfolioweb.service;
 
 import java.util.List;
 
-import model.Trabajo;
+import com.argprogr.portfolioweb.model.Trabajo;
 
 public interface ITrabajoService {
 	
 	public void saveTrabajo (Trabajo trabajo);
 	
-	public void updateTrabajo(Long id, Trabajo trabajo);
+	public Trabajo updateTrabajo(Long id, Trabajo trabajo);
 	
 	public List<Trabajo> getTrabajos();
 	

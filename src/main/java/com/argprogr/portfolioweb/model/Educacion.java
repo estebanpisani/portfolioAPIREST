@@ -1,4 +1,4 @@
-package model;
+package com.argprogr.portfolioweb.model;
 
 import java.time.LocalDate;
 
@@ -16,23 +16,27 @@ import lombok.Data;
 
 @Data
 @Entity
-public class Trabajo {
+public class Educacion {
 	
-	@Column(name = "id_trabajo")
+	@Column(name = "id_educacion")
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE)
 	private Long id;
 	@Column( nullable = false)
-	private String nombreEmpresa;
-	private String puesto;
+	private String nombreInstituto;
+	@Column( nullable = false)
+	private String curso;
 	@Lob
 	private String descripcion;
-	private LocalDate fechaInicio;
-	private LocalDate fechaFin;
+	/*
+	 * TODO cambiar a LocalDate
+	 */
+	private String fechaInicio;
+	private String fechaFin;
 	private String websiteURL;
+	/*
 	@ManyToOne(cascade = CascadeType.PERSIST)
 	@JoinColumn(name = "fk_persona")
 	private Persona persona;
-	
-	
+	*/
 }
