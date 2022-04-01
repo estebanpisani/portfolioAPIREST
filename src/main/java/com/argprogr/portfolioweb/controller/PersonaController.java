@@ -12,13 +12,17 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.argprogr.portfolioweb.model.Persona;
+import com.argprogr.portfolioweb.model.Trabajo;
 import com.argprogr.portfolioweb.service.PersonaService;
+import com.argprogr.portfolioweb.service.TrabajoService;
 
 @RestController
 public class PersonaController {
 	
 	@Autowired
 	PersonaService personaService;
+	@Autowired
+	TrabajoService trabajoService;
 	
 	@GetMapping("/persona/list")
 	public List<Persona> getPersonas(){
@@ -28,7 +32,12 @@ public class PersonaController {
 	@PostMapping("persona/save")
 	public String savePersona(@RequestBody Persona persona) {
 		personaService.savePersona(persona);
-		return "Persona guardada.";
+		for (Trabajo trabajo : persona.getTrabajos()) {
+			trabajo.setPersona(persona);
+			trabajoService.saveTrabajo(trabajo);		
+		}
+
+		return "Persona con trabajo creada";
 	}
 
 	@PutMapping("persona/edit/{id}")

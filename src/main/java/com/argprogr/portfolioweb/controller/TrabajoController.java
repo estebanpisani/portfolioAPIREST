@@ -25,8 +25,8 @@ public class TrabajoController {
 		return trabajoService.getTrabajos();
 	}
 	
-	@PostMapping("trabajo/save")
-	public String saveTrabajo(@RequestBody Trabajo trabajo) {
+	@PostMapping("trabajo/{personaId}/save")
+	public String saveTrabajo(@PathVariable Long personaId, @RequestBody Trabajo trabajo) {
 		trabajoService.saveTrabajo(trabajo);
 		return "Trabajo guardado.";
 	}

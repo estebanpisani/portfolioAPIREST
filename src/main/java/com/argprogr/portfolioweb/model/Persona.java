@@ -46,17 +46,16 @@ public class Persona {
 		LocalDate localDate = LocalDate.parse(dto.getCreationDate(), formatter );
 	 */
 	
-	//@Column(nullable = true)
 	private String repoURL;
-	//@Column(nullable = true)
 	private String linkedInURL;
-	//@Column(nullable = true)
 	private String websiteURL;
 	@Lob
 	private String fotoURL;
-	/*
+	
 	@OneToMany(mappedBy = "persona", orphanRemoval = true)
 	private List<Trabajo> trabajos = new ArrayList<Trabajo>();
+	
+	/*
 	@OneToMany(mappedBy = "persona", orphanRemoval = true)
 	private List<Educacion> formaciones = new ArrayList<Educacion>();
 	@OneToMany(mappedBy = "persona", orphanRemoval = true)
