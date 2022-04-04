@@ -28,14 +28,12 @@ public class Trabajo {
 	private String puesto;
 	@Lob
 	private String descripcion;
-	/*
-	 * TODO cambiar a LocalDate
-	 */
-	private String fechaInicio;
-	private String fechaFin;
+
+	private LocalDate fechaInicio;
+	private LocalDate fechaFin;
 	private String websiteURL;
 
-	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	@ManyToOne(cascade = CascadeType.MERGE, fetch = FetchType.LAZY)
 	@JoinColumn(name = "fk_persona")
 	private Persona persona;
 

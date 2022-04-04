@@ -5,41 +5,50 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.argprogr.portfolioweb.dto.ProyectoDTO;
+import com.argprogr.portfolioweb.mapper.ProyectoMapper;
+import com.argprogr.portfolioweb.model.Persona;
 import com.argprogr.portfolioweb.model.Proyecto;
+import com.argprogr.portfolioweb.repository.PersonaRepository;
 import com.argprogr.portfolioweb.repository.ProyectoRepository;
 
 @Service
-public class ProyectoService implements IProyectoService {
+public class ProyectoService{
 	
 	@Autowired
 	ProyectoRepository proyectoRepo;
+	@Autowired
+	ProyectoMapper mapper;
+	@Autowired
+	PersonaRepository personaRepo;
 
-	@Override
-	public void saveProyecto(Proyecto proyecto) {
+	public void saveProyecto(ProyectoDTO dto, Long idPersona) {
+		Proyecto proyecto = mapper.DTO2Entity(dto);
+		Persona persona = personaRepo.getById(idPersona);
+		proyecto.setPersona(persona);
+		persona.getProyectos().add(proyecto);
 		proyectoRepo.save(proyecto);		
 	}
 
-	@Override
-	public Proyecto updateProyecto(Long id, Proyecto proyecto) {
-		// TODO updateProyecto
-		return null;
+	public void updateProyecto(Long id, ProyectoDTO dto) {
+		Proyecto proyecto = proyectoRepo.getById(id);
+		proyecto.setNombreProyecto(dto.getNombreProyecto());
+		proyecto.setDescripcion(dto.getDescripcion());
+		proyecto.setWebsiteURL(dto.getWebsiteURL());
+		proyectoRepo.save(proyecto);	
 	}
 
-	@Override
-	public List<Proyecto> getProyectos() {
-		return proyectoRepo.findAll();
+
+	public List<ProyectoDTO> getProyectos(Long id) {
+		return mapper.EntityList2DTOList(proyectoRepo.findByPersona(personaRepo.getById(id)));
 	}
 
-	@Override
 	public Proyecto findProyecto(Long id) {
 		return proyectoRepo.findById(id).orElse(null);
 	}
 
-	@Override
 	public void deleteProyecto(Long id) {
 		proyectoRepo.deleteById(id);
 	}
-	
-	
 
 }

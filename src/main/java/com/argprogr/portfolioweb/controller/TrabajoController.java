@@ -9,36 +9,41 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.argprogr.portfolioweb.dto.TrabajoDTO;
+import com.argprogr.portfolioweb.model.Persona;
 import com.argprogr.portfolioweb.model.Trabajo;
+import com.argprogr.portfolioweb.repository.PersonaRepository;
+import com.argprogr.portfolioweb.service.PersonaService;
 import com.argprogr.portfolioweb.service.TrabajoService;
 
 @RestController
+@RequestMapping("{idPersona}/trabajo")
 public class TrabajoController {
 	
 	@Autowired
 	TrabajoService trabajoService;
 	
-	@GetMapping("/trabajo/list")
-	public List<Trabajo> getTrabajos(){
-		return trabajoService.getTrabajos();
+	@GetMapping("/list")
+	public List<TrabajoDTO> getTrabajos(@PathVariable Long idPersona){
+		return trabajoService.getTrabajosById(idPersona);
 	}
 	
-	@PostMapping("trabajo/{personaId}/save")
-	public String saveTrabajo(@PathVariable Long personaId, @RequestBody Trabajo trabajo) {
-		trabajoService.saveTrabajo(trabajo);
+	@PostMapping("/save")
+	public String saveTrabajo(@RequestBody TrabajoDTO dto, @PathVariable Long idPersona) {
+		trabajoService.saveTrabajo(dto, idPersona);
 		return "Trabajo guardado.";
 	}
 
-	@PutMapping("trabajo/edit/{id}")
-	public Trabajo updateTrabajo (@PathVariable Long id,
-			@RequestBody Trabajo trabajo) {
-		
-		return trabajoService.updateTrabajo(id, trabajo);
+	@PutMapping("/edit/{id}")
+	public void updateTrabajo (@PathVariable Long id,
+			@RequestBody TrabajoDTO dto) {
+		trabajoService.updateTrabajo(id, dto);
 	}
-	
-	@DeleteMapping("trabajo/delete/{id}")
+
+	@DeleteMapping("/delete/{id}")
 	public String deleteTrabajo (@PathVariable Long id) {
 		trabajoService.deleteTrabajo(id);
 		return "Trabajo eliminado.";

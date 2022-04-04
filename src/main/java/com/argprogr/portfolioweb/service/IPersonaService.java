@@ -2,17 +2,17 @@ package com.argprogr.portfolioweb.service;
 
 import java.util.List;
 
-import com.argprogr.portfolioweb.model.Persona;
+import com.argprogr.portfolioweb.dto.PersonaDTO;
 
 public interface IPersonaService {
 	
-	public void savePersona (Persona persona);
+	public void savePersona (PersonaDTO dto);
 	
-	public Persona updatePersona(Long id, Persona persona);
+	public void updatePersona(Long id, PersonaDTO dto);
 	
-	public List<Persona> getPersonas();
+	public List<PersonaDTO> getPersonas();
 	
-	public Persona findPersona (Long id);
+	public PersonaDTO findPersona (Long id);
 	
 	public void deletePersona (Long id);
 	

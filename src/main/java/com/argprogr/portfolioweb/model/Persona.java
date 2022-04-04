@@ -39,13 +39,7 @@ public class Persona {
 	@Lob
 	private String descripcion;
 	private String telefono;
-	private String fechaNac;
-	
-	/* TODO Parsear fecha
-	 * DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy/MM/dd");
-		LocalDate localDate = LocalDate.parse(dto.getCreationDate(), formatter );
-	 */
-	
+	private LocalDate fechaNac;
 	private String repoURL;
 	private String linkedInURL;
 	private String websiteURL;
@@ -54,13 +48,10 @@ public class Persona {
 	
 	@OneToMany(mappedBy = "persona", orphanRemoval = true)
 	private List<Trabajo> trabajos = new ArrayList<Trabajo>();
-	
-	/*
-	@OneToMany(mappedBy = "persona", orphanRemoval = true)
+	@OneToMany(mappedBy = "persona")
 	private List<Educacion> formaciones = new ArrayList<Educacion>();
 	@OneToMany(mappedBy = "persona", orphanRemoval = true)
 	private List<Proyecto> proyectos = new ArrayList<Proyecto>();
-	*/
 	
 	
 

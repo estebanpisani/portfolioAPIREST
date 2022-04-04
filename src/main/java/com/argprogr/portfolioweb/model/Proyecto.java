@@ -3,6 +3,7 @@ package com.argprogr.portfolioweb.model;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -24,9 +25,9 @@ public class Proyecto {
 	@Lob
 	private String descripcion;
 	private String websiteURL;
-	/*
-	@ManyToOne(cascade = CascadeType.PERSIST)
+	
+	@ManyToOne(cascade = CascadeType.MERGE, fetch = FetchType.LAZY)
 	@JoinColumn(name = "fk_persona")
 	private Persona persona;
-	 */
+	 
 }

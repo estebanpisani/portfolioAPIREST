@@ -9,36 +9,39 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.argprogr.portfolioweb.dto.ProyectoDTO;
 import com.argprogr.portfolioweb.model.Proyecto;
 import com.argprogr.portfolioweb.service.ProyectoService;
 
 @RestController
+@RequestMapping("{idPersona}/proyecto")
 public class ProyectoController {
 
 	@Autowired
 	ProyectoService proyectoService;
 	
-	@GetMapping("/proyecto/list")
-	public List<Proyecto> getProyectos(){
-		return proyectoService.getProyectos();
+	@GetMapping("/list")
+	public List<ProyectoDTO> getProyectos(@PathVariable Long idPersona){
+		return proyectoService.getProyectos(idPersona);
 	}
 	
-	@PostMapping("proyecto/save")
-	public String saveProyecto(@RequestBody Proyecto proyecto) {
-		proyectoService.saveProyecto(proyecto);
+	@PostMapping("/save")
+	public String saveProyecto(@RequestBody ProyectoDTO dto, @PathVariable Long idPersona) {
+		proyectoService.saveProyecto(dto, idPersona);
 		return "Proyecto guardado.";
 	}
 
-	@PutMapping("/proyecto/edit/{id}")
-	public Proyecto updateProyecto (@PathVariable Long id,
-			@RequestBody Proyecto proyecto) {
-		
-		return proyectoService.updateProyecto(id, proyecto);
+	@PutMapping("/edit/{id}")
+	public String updateProyecto (@PathVariable Long id,
+			@RequestBody ProyectoDTO dto) {
+		proyectoService.updateProyecto(id, dto);
+		return "Proyecto guardado.";
 	}
 	
-	@DeleteMapping("proyecto/delete/{id}")
+	@DeleteMapping("/delete/{id}")
 	public String deleteProyecto (@PathVariable Long id) {
 		proyectoService.deleteProyecto(id);
 		return "Proyecto eliminado.";

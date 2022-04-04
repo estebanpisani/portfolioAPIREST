@@ -5,53 +5,53 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.argprogr.portfolioweb.dto.PersonaDTO;
+import com.argprogr.portfolioweb.mapper.PersonaMapper;
 import com.argprogr.portfolioweb.model.Persona;
 import com.argprogr.portfolioweb.repository.PersonaRepository;
 
 @Service
-public class PersonaService implements IPersonaService {
+public class PersonaService{
 	@Autowired
 	PersonaRepository personaRepo;
+	@Autowired
+	PersonaMapper mapper;
 
-
-	@Override
-	public void savePersona(Persona persona) {
+	public void savePersona(PersonaDTO dto) {
 		
+		personaRepo.save(mapper.DTO2Entity(dto));
+		
+	}
+
+	public void updatePersona(Long id, PersonaDTO dto) {
+		
+		Persona persona = personaRepo.getById(id);
+		
+		persona.setNombre(dto.getNombre());
+		persona.setApellido(dto.getApellido());
+		persona.setDescripcion(dto.getDescripcion());
+		persona.setDireccion(dto.getDireccion());
+		persona.setTelefono(dto.getTelefono());
+		persona.setEmail(dto.getEmail());
+		persona.setLinkedInURL(dto.getLinkedInURL());
+		persona.setRepoURL(dto.getRepoURL());
+		persona.setWebsiteURL(dto.getWebsiteURL());
 		personaRepo.save(persona);
-		
 	}
 
-	@Override
-	public Persona updatePersona(Long id, Persona persona) {
+	public List<PersonaDTO> getPersonas() {
 		
-		Persona perso = personaRepo.getById(id);
-		
-		perso.setNombre(persona.getNombre());
-		perso.setApellido(persona.getApellido());
-		perso.setDescripcion(persona.getDescripcion());
-		perso.setDireccion(persona.getDireccion());
-		perso.setTelefono(persona.getTelefono());
-		perso.setEmail(persona.getEmail());
-		perso.setLinkedInURL(persona.getLinkedInURL());
-		perso.setRepoURL(persona.getRepoURL());
-		perso.setWebsiteURL(persona.getWebsiteURL());
-		
-		return personaRepo.save(perso);
-	}
-
-	@Override
-	public List<Persona> getPersonas() {
-		
-		return personaRepo.findAll();
+		return mapper.EntityList2DTOList(personaRepo.findAll());
 	}
 	
-	@Override
-	public Persona findPersona(Long id) {
-
-		return personaRepo.findById(id).orElse(null);
+	public PersonaDTO findPersona(Long id) {
+		Persona persona = personaRepo.findById(id).orElse(null);
+		if (persona != null) {
+			return mapper.Entity2DTO(persona);
+		}
+		return null;
 	}
 	
-	@Override
 	public void deletePersona(Long id) {
 
 		personaRepo.deleteById(id);

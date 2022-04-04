@@ -9,36 +9,39 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.argprogr.portfolioweb.dto.EducacionDTO;
 import com.argprogr.portfolioweb.model.Educacion;
 import com.argprogr.portfolioweb.service.EducacionService;
 
 @RestController
+@RequestMapping("/{idPersona}/educacion")
 public class EducacionController {
 	
 	@Autowired
 	EducacionService educacionService;
 	
-	@GetMapping("/educacion/list")
-	public List<Educacion> getEducacions(){
-		return educacionService.getEducacions();
+	@GetMapping("/list")
+	public List<EducacionDTO> getEducaciones(@PathVariable Long idPersona){
+		return educacionService.getEducaciones(idPersona);
 	}
 	
-	@PostMapping("educacion/save")
-	public String saveEducacion(@RequestBody Educacion educacion) {
-		educacionService.saveEducacion(educacion);
+	@PostMapping("/save")
+	public String saveEducacion(@RequestBody EducacionDTO dto, @PathVariable Long idPersona) {
+		educacionService.saveEducacion(dto, idPersona);
 		return "Educacion guardada.";
 	}
 
-	@PutMapping("educacion/edit/{id}")
-	public Educacion updateEducacion (@PathVariable Long id,
-			@RequestBody Educacion educacion) {
-		
-		return educacionService.updateEducacion(id, educacion);
+	@PutMapping("/edit/{id}")
+	public String updateEducacion (@PathVariable Long id,
+			@RequestBody EducacionDTO dto) {
+		educacionService.updateEducacion(id, dto);
+		return "Educacion guardada.";
 	}
 	
-	@DeleteMapping("educacion/delete/{id}")
+	@DeleteMapping("/delete/{id}")
 	public String deleteEducacion (@PathVariable Long id) {
 		educacionService.deleteEducacion(id);
 		return "Educacion eliminada.";

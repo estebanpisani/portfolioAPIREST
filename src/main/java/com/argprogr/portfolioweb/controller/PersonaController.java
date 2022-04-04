@@ -9,14 +9,15 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.argprogr.portfolioweb.model.Persona;
-import com.argprogr.portfolioweb.model.Trabajo;
+import com.argprogr.portfolioweb.dto.PersonaDTO;
 import com.argprogr.portfolioweb.service.PersonaService;
 import com.argprogr.portfolioweb.service.TrabajoService;
 
 @RestController
+@RequestMapping("/persona")
 public class PersonaController {
 	
 	@Autowired
@@ -24,33 +25,28 @@ public class PersonaController {
 	@Autowired
 	TrabajoService trabajoService;
 	
-	@GetMapping("/persona/list")
-	public List<Persona> getPersonas(){
+	@GetMapping("/list")
+	public List<PersonaDTO> getPersonas(){
 		return personaService.getPersonas();
 	}
 	
-	@PostMapping("persona/save")
-	public String savePersona(@RequestBody Persona persona) {
-		personaService.savePersona(persona);
-		for (Trabajo trabajo : persona.getTrabajos()) {
-			trabajo.setPersona(persona);
-			trabajoService.saveTrabajo(trabajo);		
-		}
-
-		return "Persona con trabajo creada";
+	@PostMapping("/save")
+	public String savePersona(@RequestBody PersonaDTO dto) {
+		personaService.savePersona(dto);
+		return "Persona creada";
 	}
 
-	@PutMapping("persona/edit/{id}")
-	public Persona updatePersona (@PathVariable Long id,
-			@RequestBody Persona persona) {
-		
-		return personaService.updatePersona(id, persona);
+	@PutMapping("/edit/{id}")
+	public String updatePersona (@PathVariable Long id,
+			@RequestBody PersonaDTO dto) {
+		personaService.updatePersona(id, dto);
+		return "Persona editada";
 	}
 	
-	@DeleteMapping("persona/delete/{id}")
+	@DeleteMapping("/delete/{id}")
 	public String deletePersona (@PathVariable Long id) {
 		personaService.deletePersona(id);
 		return "Persona eliminada.";
 	}
-	
+
 }
