@@ -1,18 +1,24 @@
 package com.argprogr.portfolioweb.controller;
 
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.argprogr.portfolioweb.dto.UserDTO;
+import com.argprogr.portfolioweb.model.Usuario;
 import com.argprogr.portfolioweb.repository.UsuarioRepository;
 import com.argprogr.portfolioweb.security.JWTAuthResponseDTO;
 import com.argprogr.portfolioweb.security.JWTTokenProvider;
@@ -61,5 +67,19 @@ public class AuthController {
 		return new ResponseEntity<String>("Usuario registrado con éxito.", HttpStatus.CREATED);
 	}
 	
+	//TODO Arreglar. Siempre elimina aunque no encuentre usuario.
+	@PreAuthorize("hasAnyRole('ROLE_ADMIN')")
+	@DeleteMapping("/delete/{id}")
+	public ResponseEntity<String> delete(@PathVariable Long id){
+		Optional<Usuario> opt = usuarioRepo.findById(id);
+		
+			if (opt.isEmpty()){
+				return new ResponseEntity<String>("Usuario no encontrado.", HttpStatus.BAD_REQUEST);
 
-}
+			} else {
+				usuarioService.deleteUsuarioById(id);
+				return new ResponseEntity<String>("Usuario eliminado.", HttpStatus.OK);
+			}
+	}
+
+	}
