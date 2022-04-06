@@ -1,7 +1,5 @@
 package com.argprogr.portfolioweb.controller;
 
-import java.util.Collections;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -9,17 +7,16 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.argprogr.portfolioweb.dto.UserDTO;
-import com.argprogr.portfolioweb.model.Rol;
-import com.argprogr.portfolioweb.model.Usuario;
-import com.argprogr.portfolioweb.repository.RolRepository;
 import com.argprogr.portfolioweb.repository.UsuarioRepository;
+import com.argprogr.portfolioweb.security.JWTAuthResponseDTO;
+import com.argprogr.portfolioweb.security.JWTTokenProvider;
+import com.argprogr.portfolioweb.service.UsuarioService;
 
 @RestController
 @RequestMapping("/api/auth")
@@ -30,12 +27,13 @@ public class AuthController {
 	@Autowired
 	UsuarioRepository usuarioRepo;
 	@Autowired
-	RolRepository rolRepo;
+	UsuarioService usuarioService;
+
 	@Autowired
-	PasswordEncoder passwordEncoder;
+	JWTTokenProvider tokenProvider;
 	
 	@PostMapping("/login")
-	public ResponseEntity<String> authenticateUser(@RequestBody UserDTO dto){
+	public ResponseEntity<JWTAuthResponseDTO> authenticateUser(@RequestBody UserDTO dto){
 		
 		Authentication authentication = authenticationManager.authenticate(
 				new UsernamePasswordAuthenticationToken(dto.getUsername(), dto.getPassword())
@@ -43,7 +41,12 @@ public class AuthController {
 		
 		SecurityContextHolder.getContext().setAuthentication(authentication);
 		
-		return new ResponseEntity<String>("Sesión iniciada con éxito.", HttpStatus.OK);
+		//Obtener token del Provider
+		String token = tokenProvider.generateToken(authentication);
+		
+		
+		
+		return ResponseEntity.ok(new JWTAuthResponseDTO(token));
 		
 	}
 	
@@ -52,18 +55,8 @@ public class AuthController {
 		if(usuarioRepo.existsByUsername(dto.getUsername())) {
 			return new ResponseEntity<String>("Nombre de Usuario ya existe.", HttpStatus.BAD_REQUEST);
 		}
-		/**
-		 * TODO Desarrollar usuario service
-		 */
-		
-		Usuario usuario = new Usuario();
-		usuario.setUsername(dto.getUsername());
-		usuario.setPasword(passwordEncoder.encode(dto.getPassword()));
-		
-		Rol rol = rolRepo.findByNombre("ROLE_ADMIN").get();
-		usuario.setRoles(Collections.singleton(rol));
-		
-		usuarioRepo.save(usuario);
+		//Booleano para indicar si es admin o no.
+		usuarioService.saveUsuario(dto, false);
 		
 		return new ResponseEntity<String>("Usuario registrado con éxito.", HttpStatus.CREATED);
 	}

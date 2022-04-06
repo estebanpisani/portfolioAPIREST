@@ -20,7 +20,7 @@ import com.argprogr.portfolioweb.service.PersonaService;
 import com.argprogr.portfolioweb.service.TrabajoService;
 
 @RestController
-@RequestMapping("{idPersona}/trabajo")
+@RequestMapping("/api/trabajo/{idPersona}")
 public class TrabajoController {
 	
 	@Autowired

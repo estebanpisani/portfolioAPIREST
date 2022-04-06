@@ -17,7 +17,7 @@ import com.argprogr.portfolioweb.model.Proyecto;
 import com.argprogr.portfolioweb.service.ProyectoService;
 
 @RestController
-@RequestMapping("{idPersona}/proyecto")
+@RequestMapping("/api/proyecto/{idPersona}")
 public class ProyectoController {
 
 	@Autowired

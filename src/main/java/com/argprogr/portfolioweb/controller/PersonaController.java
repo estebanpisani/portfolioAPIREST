@@ -17,7 +17,7 @@ import com.argprogr.portfolioweb.service.PersonaService;
 import com.argprogr.portfolioweb.service.TrabajoService;
 
 @RestController
-@RequestMapping("/persona")
+@RequestMapping("/api/persona")
 public class PersonaController {
 	
 	@Autowired

@@ -10,14 +10,14 @@ import org.springframework.security.config.annotation.method.configuration.Enabl
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
-import static java.lang.String.format;
-
-import com.argprogr.portfolioweb.repository.UsuarioRepository;
 import com.argprogr.portfolioweb.security.CustomUserDetailsService;
+import com.argprogr.portfolioweb.security.JWTAuthenticationEntryPoint;
+import com.argprogr.portfolioweb.security.JWTAuthenticationFilter;
 
 @Configuration
 @EnableWebSecurity
@@ -25,6 +25,17 @@ import com.argprogr.portfolioweb.security.CustomUserDetailsService;
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	@Autowired
 	CustomUserDetailsService userDetailsService;
+	
+	@Autowired
+	JWTAuthenticationEntryPoint authenticationEntryPoint;
+	
+	@Bean
+	public JWTAuthenticationFilter filter() {
+		return new JWTAuthenticationFilter();
+	}
+	
+	
+	
     @Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
@@ -35,6 +46,13 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 		http
 		// Deshabilitar CSRF
 		.csrf().disable()
+		//
+		.exceptionHandling()
+		.authenticationEntryPoint(authenticationEntryPoint)
+		.and()
+		.sessionManagement()
+		.sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+		.and()		
 		// Configurar autorización
 		.authorizeRequests()
 		//Autoriza recursos a cualquiera
@@ -42,10 +60,13 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 		.antMatchers("/api/auth/**").permitAll()
 		//	Cualquier otro tiene que ser autenticado.
 		.anyRequest()
-		.authenticated()
-		.and()
-		//Tipo de Autenticación Básica.
+		.authenticated();
+		// Agregar filtro
+		http.addFilterBefore(filter(), UsernamePasswordAuthenticationFilter.class);
+		
+		/*Tipo de Autenticación Básica.
 		.httpBasic();
+		*/
 		
 	}
 	

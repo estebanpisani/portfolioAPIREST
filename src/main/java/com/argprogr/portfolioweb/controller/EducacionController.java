@@ -17,7 +17,7 @@ import com.argprogr.portfolioweb.model.Educacion;
 import com.argprogr.portfolioweb.service.EducacionService;
 
 @RestController
-@RequestMapping("/{idPersona}/educacion")
+@RequestMapping("/api/educacion/{idPersona}")
 public class EducacionController {
 	
 	@Autowired
