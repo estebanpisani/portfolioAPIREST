@@ -32,7 +32,6 @@ public class UsuarioService{
 		Usuario usuario = new Usuario();
 		usuario.setUsername(dto.getUsername());
 		usuario.setPasword(passwordEncoder.encode(dto.getPassword()));
-		
 		if(admin) {
 			Rol rol = rolRepo.findByNombre("ROLE_ADMIN").get();
 			usuario.setRoles(Collections.singleton(rol));

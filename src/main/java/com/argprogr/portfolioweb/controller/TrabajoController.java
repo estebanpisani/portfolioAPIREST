@@ -20,20 +20,20 @@ import com.argprogr.portfolioweb.service.PersonaService;
 import com.argprogr.portfolioweb.service.TrabajoService;
 
 @RestController
-@RequestMapping("/api/trabajo/{idPersona}")
+@RequestMapping("/api/trabajo")
 public class TrabajoController {
 	
 	@Autowired
 	TrabajoService trabajoService;
 	
-	@GetMapping("/list")
-	public List<TrabajoDTO> getTrabajos(@PathVariable Long idPersona){
-		return trabajoService.getTrabajosById(idPersona);
+	@GetMapping()
+	public List<TrabajoDTO> getTrabajos(){
+		return trabajoService.getTrabajosById((long) 1);
 	}
 	
 	@PostMapping("/save")
-	public String saveTrabajo(@RequestBody TrabajoDTO dto, @PathVariable Long idPersona) {
-		trabajoService.saveTrabajo(dto, idPersona);
+	public String saveTrabajo(@RequestBody TrabajoDTO dto) {
+		trabajoService.saveTrabajo(dto, (long) 1);
 		return "Trabajo guardado.";
 	}
 

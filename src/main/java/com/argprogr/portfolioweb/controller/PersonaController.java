@@ -1,7 +1,5 @@
 package com.argprogr.portfolioweb.controller;
 
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -15,7 +13,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.argprogr.portfolioweb.dto.PersonaDTO;
 import com.argprogr.portfolioweb.service.PersonaService;
-import com.argprogr.portfolioweb.service.TrabajoService;
 
 @RestController
 @RequestMapping("/api/persona")
@@ -23,25 +20,22 @@ public class PersonaController {
 	
 	@Autowired
 	PersonaService personaService;
-	@Autowired
-	TrabajoService trabajoService;
 	
-	@PreAuthorize("hasAnyRole('ROLE_ADMIN')")
-	@GetMapping("/list")
-	public List<PersonaDTO> getPersonas(){
-		return personaService.getPersonas();
+	@GetMapping()
+	public PersonaDTO getPersona(){
+		return personaService.findPersona((long) 1);
 	}
 	
+	@PreAuthorize("hasAnyRole('ROLE_ADMIN')")
 	@PostMapping("/save")
 	public String savePersona(@RequestBody PersonaDTO dto) {
 		personaService.savePersona(dto);
-		return "Persona creada";
+		return "Persona creada.";
 	}
 
-	@PutMapping("/edit/{id}")
-	public String updatePersona (@PathVariable Long id,
-			@RequestBody PersonaDTO dto) {
-		personaService.updatePersona(id, dto);
+	@PutMapping("/edit")
+	public String updatePersona (@RequestBody PersonaDTO dto) {
+		personaService.updatePersona((long) 1, dto);
 		return "Persona editada";
 	}
 	

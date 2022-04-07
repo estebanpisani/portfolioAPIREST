@@ -17,20 +17,20 @@ import com.argprogr.portfolioweb.model.Proyecto;
 import com.argprogr.portfolioweb.service.ProyectoService;
 
 @RestController
-@RequestMapping("/api/proyecto/{idPersona}")
+@RequestMapping("/api/proyecto")
 public class ProyectoController {
 
 	@Autowired
 	ProyectoService proyectoService;
 	
 	@GetMapping("/list")
-	public List<ProyectoDTO> getProyectos(@PathVariable Long idPersona){
-		return proyectoService.getProyectos(idPersona);
+	public List<ProyectoDTO> getProyectos(){
+		return proyectoService.getProyectos((long) 1);
 	}
 	
 	@PostMapping("/save")
-	public String saveProyecto(@RequestBody ProyectoDTO dto, @PathVariable Long idPersona) {
-		proyectoService.saveProyecto(dto, idPersona);
+	public String saveProyecto(@RequestBody ProyectoDTO dto) {
+		proyectoService.saveProyecto(dto, (long) 1);
 		return "Proyecto guardado.";
 	}
 

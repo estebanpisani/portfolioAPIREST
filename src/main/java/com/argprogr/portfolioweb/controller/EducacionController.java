@@ -24,13 +24,13 @@ public class EducacionController {
 	EducacionService educacionService;
 	
 	@GetMapping("/list")
-	public List<EducacionDTO> getEducaciones(@PathVariable Long idPersona){
-		return educacionService.getEducaciones(idPersona);
+	public List<EducacionDTO> getEducaciones(){
+		return educacionService.getEducaciones((long) 1);
 	}
 	
 	@PostMapping("/save")
-	public String saveEducacion(@RequestBody EducacionDTO dto, @PathVariable Long idPersona) {
-		educacionService.saveEducacion(dto, idPersona);
+	public String saveEducacion(@RequestBody EducacionDTO dto) {
+		educacionService.saveEducacion(dto, (long) 1);
 		return "Educacion guardada.";
 	}
 

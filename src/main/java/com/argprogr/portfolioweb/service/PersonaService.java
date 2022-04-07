@@ -17,10 +17,9 @@ public class PersonaService{
 	@Autowired
 	PersonaMapper mapper;
 
-	public void savePersona(PersonaDTO dto) {
+	public Persona savePersona(PersonaDTO dto) {
 		
-		personaRepo.save(mapper.DTO2Entity(dto));
-		
+		return personaRepo.save(mapper.DTO2Entity(dto));
 	}
 
 	public void updatePersona(Long id, PersonaDTO dto) {

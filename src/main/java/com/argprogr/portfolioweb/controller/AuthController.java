@@ -17,11 +17,13 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.argprogr.portfolioweb.dto.PersonaDTO;
 import com.argprogr.portfolioweb.dto.UserDTO;
 import com.argprogr.portfolioweb.model.Usuario;
 import com.argprogr.portfolioweb.repository.UsuarioRepository;
 import com.argprogr.portfolioweb.security.JWTAuthResponseDTO;
 import com.argprogr.portfolioweb.security.JWTTokenProvider;
+import com.argprogr.portfolioweb.service.PersonaService;
 import com.argprogr.portfolioweb.service.UsuarioService;
 
 @RestController
@@ -34,7 +36,8 @@ public class AuthController {
 	UsuarioRepository usuarioRepo;
 	@Autowired
 	UsuarioService usuarioService;
-
+	@Autowired
+	PersonaService personaService;
 	@Autowired
 	JWTTokenProvider tokenProvider;
 	
@@ -49,20 +52,17 @@ public class AuthController {
 		
 		//Obtener token del Provider
 		String token = tokenProvider.generateToken(authentication);
-		
-		
-		
+
 		return ResponseEntity.ok(new JWTAuthResponseDTO(token));
-		
 	}
 	
 	@PostMapping("/register")
-	public ResponseEntity<?> register(@RequestBody UserDTO dto){
-		if(usuarioRepo.existsByUsername(dto.getUsername())) {
+	public ResponseEntity<?> register(@RequestBody UserDTO userDTO, @RequestBody PersonaDTO personaDTO){
+		if(usuarioRepo.existsByUsername(userDTO.getUsername())) {
 			return new ResponseEntity<String>("Nombre de Usuario ya existe.", HttpStatus.BAD_REQUEST);
 		}
 		//Booleano para indicar si es admin o no.
-		usuarioService.saveUsuario(dto, false);
+		usuarioService.saveUsuario(userDTO, false);
 		
 		return new ResponseEntity<String>("Usuario registrado con éxito.", HttpStatus.CREATED);
 	}
