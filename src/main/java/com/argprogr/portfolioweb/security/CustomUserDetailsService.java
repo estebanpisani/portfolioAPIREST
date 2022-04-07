@@ -1,6 +1,8 @@
 package com.argprogr.portfolioweb.security;
 
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -29,14 +31,26 @@ public class CustomUserDetailsService implements UserDetailsService {
 		Usuario usuario = usuarioRepo.findByUsername(username).orElseThrow(
 				()-> new UsernameNotFoundException("Usuario "+username+" no encontrado.")
 				);
+		
+		List<GrantedAuthority> permisos = new ArrayList<>();
+
+		GrantedAuthority p1 = new SimpleGrantedAuthority("ROLE_USER");
+		permisos.add(p1);
+		if (usuario.getAdmin()) {
+			GrantedAuthority p2 = new SimpleGrantedAuthority("ROLE_ADMIN");
+			permisos.add(p2);
+		}
+		
 		//Si existe devolvemos un User con sus credenciales.
-		return new User(usuario.getUsername(), usuario.getPasword(), mapearRoles(usuario.getRoles()));
+		return new User(usuario.getUsername(), usuario.getPasword(), permisos);
 	}
 
+	/*
 	private Collection<? extends GrantedAuthority> mapearRoles(Set<Rol> roles){
 		return roles
 				.stream()
 				.map(rol -> 
 				new SimpleGrantedAuthority(rol.getNombre())).collect(Collectors.toList());
 	}
+	*/
 }

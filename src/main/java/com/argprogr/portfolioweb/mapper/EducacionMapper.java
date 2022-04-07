@@ -20,6 +20,7 @@ public class EducacionMapper {
 		dto.setId(educacion.getId());
 		dto.setNombreInstituto(educacion.getNombreInstituto());
 		dto.setCurso(educacion.getCurso());
+		dto.setDescripcion(educacion.getDescripcion());
 		dto.setFechaInicio(educacion.getFechaInicio().toString());
 		dto.setFechaFin(educacion.getFechaFin().toString());
 		dto.setWebsiteURL(educacion.getWebsiteURL());

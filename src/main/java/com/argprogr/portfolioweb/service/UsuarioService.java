@@ -19,8 +19,10 @@ public class UsuarioService{
 
 	@Autowired
 	UsuarioRepository usuarioRepo;
+	/*
 	@Autowired
 	RolRepository rolRepo;
+	*/
 	@Autowired
 	PasswordEncoder passwordEncoder;
 	/*
@@ -32,14 +34,20 @@ public class UsuarioService{
 		Usuario usuario = new Usuario();
 		usuario.setUsername(dto.getUsername());
 		usuario.setPasword(passwordEncoder.encode(dto.getPassword()));
+		usuario.setAdmin(admin);
+		/*
 		if(admin) {
+		
 			Rol rol = rolRepo.findByNombre("ROLE_ADMIN").get();
 			usuario.setRoles(Collections.singleton(rol));
+			
+			
 		} else {
 			Rol rol = rolRepo.findByNombre("ROLE_USER").get();
 			usuario.setRoles(Collections.singleton(rol));			
 		}
-		System.out.println("Usuario creado con rol "+ usuario.getRoles().toString());
+		*/
+		System.out.println("Usuario creado.");
 		usuarioRepo.save(usuario);
 	}
 

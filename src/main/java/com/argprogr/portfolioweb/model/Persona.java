@@ -48,7 +48,7 @@ public class Persona {
 	
 	@OneToMany(mappedBy = "persona", orphanRemoval = true)
 	private List<Trabajo> trabajos = new ArrayList<Trabajo>();
-	@OneToMany(mappedBy = "persona")
+	@OneToMany(mappedBy = "persona", orphanRemoval = true)
 	private List<Educacion> formaciones = new ArrayList<Educacion>();
 	@OneToMany(mappedBy = "persona", orphanRemoval = true)
 	private List<Proyecto> proyectos = new ArrayList<Proyecto>();

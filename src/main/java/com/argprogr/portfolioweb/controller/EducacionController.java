@@ -3,6 +3,7 @@ package com.argprogr.portfolioweb.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -17,7 +18,8 @@ import com.argprogr.portfolioweb.model.Educacion;
 import com.argprogr.portfolioweb.service.EducacionService;
 
 @RestController
-@RequestMapping("/api/educacion/{idPersona}")
+@RequestMapping("/api/educacion")
+@CrossOrigin(origins = "http://localhost:4200")
 public class EducacionController {
 	
 	@Autowired
