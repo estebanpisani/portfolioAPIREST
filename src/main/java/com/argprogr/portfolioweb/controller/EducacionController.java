@@ -3,6 +3,8 @@ package com.argprogr.portfolioweb.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -14,7 +16,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.argprogr.portfolioweb.dto.EducacionDTO;
-import com.argprogr.portfolioweb.model.Educacion;
 import com.argprogr.portfolioweb.service.EducacionService;
 
 @RestController
@@ -31,22 +32,23 @@ public class EducacionController {
 	}
 	
 	@PostMapping("/save")
-	public String saveEducacion(@RequestBody EducacionDTO dto) {
+	public ResponseEntity<?> saveEducacion(@RequestBody EducacionDTO dto) {
 		educacionService.saveEducacion(dto, (long) 1);
-		return "Educacion guardada.";
+		return new ResponseEntity(new String("Educacion guardada"), HttpStatus.CREATED);
 	}
 
 	@PutMapping("/edit/{id}")
-	public String updateEducacion (@PathVariable Long id,
+	public ResponseEntity<?> updateEducacion (@PathVariable Long id,
 			@RequestBody EducacionDTO dto) {
 		educacionService.updateEducacion(id, dto);
-		return "Educacion guardada.";
+		return new ResponseEntity(new String("Educacion guardada"), HttpStatus.OK);
 	}
 	
 	@DeleteMapping("/delete/{id}")
-	public String deleteEducacion (@PathVariable Long id) {
+	public ResponseEntity<?> deleteEducacion (@PathVariable Long id) {
+		System.out.println("Borrando id "+id+"...");
 		educacionService.deleteEducacion(id);
-		return "Educacion eliminada.";
+		return new ResponseEntity(new String("Educacion eliminada"), HttpStatus.OK);
 	}
 
 }
