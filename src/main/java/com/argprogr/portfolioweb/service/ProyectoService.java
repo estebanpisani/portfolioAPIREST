@@ -46,6 +46,10 @@ public class ProyectoService{
 	public Proyecto findProyecto(Long id) {
 		return proyectoRepo.findById(id).orElse(null);
 	}
+	
+	public Boolean existsById(Long id) {
+		return proyectoRepo.existsById(id);
+	}
 
 	public void deleteProyecto(Long id) {
 		proyectoRepo.deleteById(id);

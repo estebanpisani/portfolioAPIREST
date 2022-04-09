@@ -14,8 +14,10 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.util.StringUtils;
 
 import com.argprogr.portfolioweb.dto.EducacionDTO;
+import com.argprogr.portfolioweb.dto.Mensaje;
 import com.argprogr.portfolioweb.service.EducacionService;
 
 @RestController
@@ -27,28 +29,57 @@ public class EducacionController {
 	EducacionService educacionService;
 	
 	@GetMapping("/list")
-	public List<EducacionDTO> getEducaciones(){
-		return educacionService.getEducaciones((long) 1);
+	public ResponseEntity<List<EducacionDTO>> getEducaciones(){
+		List<EducacionDTO> list = educacionService.getEducaciones((long) 1);
+		if(list.isEmpty()) {
+			return new ResponseEntity(new Mensaje("Aún no ha agregado estudios."), HttpStatus.OK);
+		}
+		return new ResponseEntity(list, HttpStatus.OK);
 	}
 	
 	@PostMapping("/save")
 	public ResponseEntity<?> saveEducacion(@RequestBody EducacionDTO dto) {
-		educacionService.saveEducacion(dto, (long) 1);
-		return new ResponseEntity(new String("Educacion guardada"), HttpStatus.CREATED);
+        if(!StringUtils.hasText(dto.getNombreInstituto())) {
+            return new ResponseEntity(
+            		new Mensaje("El nombre del instituto es obligatorio."), HttpStatus.BAD_REQUEST);
+            }
+        if(!StringUtils.hasText(dto.getCurso())) {
+            return new ResponseEntity(
+            		new Mensaje("El nombre del curso es obligatorio."), HttpStatus.BAD_REQUEST);
+            }   
+        
+		educacionService.saveEducacion(dto);
+		return new ResponseEntity(new String("Estudio guardado."), HttpStatus.CREATED);
 	}
 
 	@PutMapping("/edit/{id}")
 	public ResponseEntity<?> updateEducacion (@PathVariable Long id,
 			@RequestBody EducacionDTO dto) {
+		
+        if(!educacionService.existsById(id)) {
+            return new ResponseEntity(new Mensaje("No existe en la base de datos."), HttpStatus.NOT_FOUND);
+            }
+        
+        if(!StringUtils.hasText(dto.getNombreInstituto())) {
+            return new ResponseEntity(
+            		new Mensaje("El nombre del instituto es obligatorio."), HttpStatus.BAD_REQUEST);
+            }
+        if(!StringUtils.hasText(dto.getCurso())) {
+            return new ResponseEntity(
+            		new Mensaje("El nombre del curso es obligatorio."), HttpStatus.BAD_REQUEST);
+            } 
+
 		educacionService.updateEducacion(id, dto);
-		return new ResponseEntity(new String("Educacion guardada"), HttpStatus.OK);
+		return new ResponseEntity(new String("Estudio actualizado."), HttpStatus.OK);
 	}
 	
 	@DeleteMapping("/delete/{id}")
 	public ResponseEntity<?> deleteEducacion (@PathVariable Long id) {
-		System.out.println("Borrando id "+id+"...");
+        if(!educacionService.existsById(id)) {
+            return new ResponseEntity(new Mensaje("No existe en la base de datos."), HttpStatus.NOT_FOUND);
+            }
 		educacionService.deleteEducacion(id);
-		return new ResponseEntity(new String("Educacion eliminada"), HttpStatus.OK);
+		return new ResponseEntity(new String("Estudio eliminado."), HttpStatus.OK);
 	}
 
 }

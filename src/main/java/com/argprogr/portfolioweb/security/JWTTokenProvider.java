@@ -6,6 +6,8 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Component;
 
+import com.argprogr.portfolioweb.model.UsuarioPrincipal;
+
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.Jwt;
@@ -24,21 +26,17 @@ public class JWTTokenProvider {
 	private Long jwtExpirationInMs;
 	
 	public String generateToken(Authentication authentication) {
-		String username = authentication.getName();
-		Date fechaActual = new Date();
-		Date fechaExp = new Date(fechaActual.getTime() + jwtExpirationInMs);
-		
-		String token = Jwts.builder()
-				.setSubject(username)
-				.setIssuedAt(new Date())
-				.setExpiration(fechaExp)
-				.signWith(SignatureAlgorithm.HS512, jwtSecret)
-				.compact();
-		
-		return token;
+		UsuarioPrincipal usuarioPrincipal = (UsuarioPrincipal) authentication.getPrincipal();
+
+        return Jwts.builder().setSubject(usuarioPrincipal.getUsername())
+                .setIssuedAt(new Date())
+                .setExpiration(new Date(new Date().getTime() + jwtExpirationInMs * 1000))
+                .signWith(SignatureAlgorithm.HS512, jwtSecret)
+                .compact();
+
 	}
 	
-	public String getUsernameFromJWT(String token) {
+	public String getUsernameFromToken(String token) {
 		
 		Claims claims = Jwts.parser().setSigningKey(jwtSecret).parseClaimsJws(token).getBody();
 		return claims.getSubject();
@@ -49,9 +47,7 @@ public class JWTTokenProvider {
 		try {
 			
 			Jwts.parser().setSigningKey(jwtSecret).parseClaimsJws(token);
-			return true;
-			
-			
+			return true;			
 		}
 		catch (SignatureException ex) {
 			throw new Exception("Firma JWT no válida");
@@ -68,10 +64,6 @@ public class JWTTokenProvider {
 		catch (IllegalArgumentException ex) {
 			throw new Exception("La cadena Claims del JWT está vacía.");
 		}
-		
-		
-		
-		
 	}
 
 }

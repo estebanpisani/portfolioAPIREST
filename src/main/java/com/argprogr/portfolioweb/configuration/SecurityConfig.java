@@ -23,6 +23,7 @@ import com.argprogr.portfolioweb.security.JWTAuthenticationFilter;
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
+	
 	@Autowired
 	CustomUserDetailsService userDetailsService;
 	
@@ -34,55 +35,49 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 		return new JWTAuthenticationFilter();
 	}
 	
-	
-	
     @Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
+    }
+    
+	@Override
+	protected void configure(AuthenticationManagerBuilder auth) throws Exception {
+		//Asignamos el userDetailsService y el Password Encoder
+		auth.userDetailsService(userDetailsService).passwordEncoder(passwordEncoder());
+	}
+	
+	@Bean
+	@Override
+	public AuthenticationManager authenticationManagerBean() throws Exception {
+		return super.authenticationManagerBean();
+	}
+	
+    @Override
+    protected AuthenticationManager authenticationManager() throws Exception {
+        return super.authenticationManager();
     }
 	
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
 		http
-		// Deshabilitar CSRF
-		.csrf().disable()
-		//
-		.exceptionHandling()
-		.authenticationEntryPoint(authenticationEntryPoint)
+		.cors()
 		.and()
-		.sessionManagement()
-		.sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+		.csrf().disable() // Deshabilitar CSRF
+		.exceptionHandling().authenticationEntryPoint(authenticationEntryPoint) // Dispara excepción de "No autorizado."
+		.and()
+		.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
 		.and()		
-		// Configurar autorización
-		.authorizeRequests()
-		//Autoriza recursos a cualquiera
-		.antMatchers(HttpMethod.GET, "/api/**").permitAll()
+		.authorizeRequests() // Configurar autorización
+		.antMatchers(HttpMethod.GET, "/api/**").permitAll()	//Autoriza recursos a cualquiera
 		.antMatchers("/api/auth/**").permitAll()
-		//	Cualquier otro tiene que ser autenticado.
-		.anyRequest()
-		.authenticated();
+		.anyRequest().authenticated(); //Cualquier otro tiene que ser autenticado.
+		
 		// Agregar filtro
 		http.addFilterBefore(filter(), UsernamePasswordAuthenticationFilter.class);
 		
-		/*Tipo de Autenticación Básica.
-		.httpBasic();
-		*/
-		
 	}
 	
-	@Override
-	protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-		//Asignamos el userDetailsService y el Password Encoder
-		auth.userDetailsService(userDetailsService).passwordEncoder(passwordEncoder());
-		
-	}
-	
-	@Override
-	@Bean
-	public AuthenticationManager authenticationManagerBean() throws Exception {
-		// TODO Auto-generated method stub
-		return super.authenticationManagerBean();
-	}
+
 
 
 

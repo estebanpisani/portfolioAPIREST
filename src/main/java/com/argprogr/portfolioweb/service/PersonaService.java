@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.argprogr.portfolioweb.dto.PersonaDTO;
 import com.argprogr.portfolioweb.mapper.PersonaMapper;
@@ -11,6 +12,7 @@ import com.argprogr.portfolioweb.model.Persona;
 import com.argprogr.portfolioweb.repository.PersonaRepository;
 
 @Service
+@Transactional
 public class PersonaService{
 	@Autowired
 	PersonaRepository personaRepo;
@@ -37,11 +39,6 @@ public class PersonaService{
 		persona.setWebsiteURL(dto.getWebsiteURL());
 		personaRepo.save(persona);
 	}
-
-	public List<PersonaDTO> getPersonas() {
-		
-		return mapper.EntityList2DTOList(personaRepo.findAll());
-	}
 	
 	public PersonaDTO findPersona(Long id) {
 		Persona persona = personaRepo.findById(id).orElse(null);
@@ -49,6 +46,10 @@ public class PersonaService{
 			return mapper.Entity2DTO(persona);
 		}
 		return null;
+	}
+	
+	public Boolean existsById(Long id) {
+		return personaRepo.existsById(id);
 	}
 	
 	public void deletePersona(Long id) {

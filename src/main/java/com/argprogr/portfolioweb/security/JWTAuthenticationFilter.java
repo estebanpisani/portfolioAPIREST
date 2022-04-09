@@ -31,10 +31,11 @@ public class JWTAuthenticationFilter extends OncePerRequestFilter {
 		try {
 			if(StringUtils.hasText(token) && jwtTokenProvider.validateToken(token)) {
 				// Obtener el username del token
-				String username = jwtTokenProvider.getUsernameFromJWT(token);
+				String username = jwtTokenProvider.getUsernameFromToken(token);
 				// Cargar usuario asociado al Token
 				UserDetails userDetails = customUserDetailsService.loadUserByUsername(username);
-				UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
+				UsernamePasswordAuthenticationToken authenticationToken = 
+						new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
 				authenticationToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
 				//Establecer seguridad
 				SecurityContextHolder.getContext().setAuthentication(authenticationToken);	
@@ -42,21 +43,15 @@ public class JWTAuthenticationFilter extends OncePerRequestFilter {
 			filterChain.doFilter(request, response);
 		} catch (Exception e) {
 			e.getMessage();
+			System.out.println("Fail en método doFilterInternal");
 		}
-		
-
-		
-		
-
-		
-		
 	}
 	
 	//Bearer token de acceso
 	private String getJWTFromRequest(HttpServletRequest request) {
-		String bearerToken = request.getHeader("Authorization");
-		if(StringUtils.hasText(bearerToken)&& bearerToken.startsWith("Bearer ")) {
-			return bearerToken.substring(7, bearerToken.length());
+		String header = request.getHeader("Authorization");
+		if(StringUtils.hasText(header)&& header.startsWith("Bearer ")) {
+			return header.substring(7, header.length());
 		}
 		return null;
 	}

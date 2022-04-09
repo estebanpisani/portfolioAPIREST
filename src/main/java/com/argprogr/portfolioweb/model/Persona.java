@@ -14,6 +14,8 @@ import javax.persistence.Lob;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import org.springframework.transaction.annotation.Transactional;
+
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.Getter;
@@ -23,6 +25,7 @@ import lombok.Setter;
 @Data
 @NoArgsConstructor
 @Entity
+@Transactional
 @Table(name = "persona")
 public class Persona {
 	

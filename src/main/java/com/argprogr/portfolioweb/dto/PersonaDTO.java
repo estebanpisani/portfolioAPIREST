@@ -1,9 +1,5 @@
 package com.argprogr.portfolioweb.dto;
 
-import java.util.List;
-
-import com.argprogr.portfolioweb.model.Trabajo;
-
 import lombok.Data;
 import lombok.NoArgsConstructor;
 

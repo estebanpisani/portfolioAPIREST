@@ -3,6 +3,9 @@ package com.argprogr.portfolioweb.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -13,8 +16,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.argprogr.portfolioweb.dto.Mensaje;
 import com.argprogr.portfolioweb.dto.ProyectoDTO;
-import com.argprogr.portfolioweb.model.Proyecto;
 import com.argprogr.portfolioweb.service.ProyectoService;
 
 @RestController
@@ -26,26 +29,48 @@ public class ProyectoController {
 	ProyectoService proyectoService;
 	
 	@GetMapping("/list")
-	public List<ProyectoDTO> getProyectos(){
-		return proyectoService.getProyectos((long) 1);
+	public ResponseEntity<List<ProyectoDTO>> getProyectos(){
+		List<ProyectoDTO> list = proyectoService.getProyectos((long) 1);
+		if(list.isEmpty()) {
+			return new ResponseEntity(new Mensaje("Aún no ha agregado proyectos."), HttpStatus.OK);
+		}
+		return new ResponseEntity(list, HttpStatus.OK);
 	}
 	
 	@PostMapping("/save")
-	public String saveProyecto(@RequestBody ProyectoDTO dto) {
-		proyectoService.saveProyecto(dto, (long) 1);
-		return "Proyecto guardado.";
+	public ResponseEntity<?> saveProyecto(@RequestBody ProyectoDTO dto) {
+		
+        if(!StringUtils.hasText(dto.getNombreProyecto())) {
+            return new ResponseEntity(
+            		new Mensaje("El nombre del proyecto es obligatorio."), HttpStatus.BAD_REQUEST);
+            }   
+        
+        proyectoService.saveProyecto(dto, (long) 1);
+		return new ResponseEntity(new String("Proyecto guardado."), HttpStatus.CREATED);
+
 	}
 
 	@PutMapping("/edit/{id}")
-	public String updateProyecto (@PathVariable Long id,
+	public ResponseEntity<?> updateProyecto (@PathVariable Long id,
 			@RequestBody ProyectoDTO dto) {
+        if(!proyectoService.existsById(id)) {
+            return new ResponseEntity(new Mensaje("No existe en la base de datos."), HttpStatus.NOT_FOUND);
+            }
+        if(!StringUtils.hasText(dto.getNombreProyecto())) {
+            return new ResponseEntity(
+            		new Mensaje("El nombre del proyecto es obligatorio."), HttpStatus.BAD_REQUEST);
+            } 		
+		
 		proyectoService.updateProyecto(id, dto);
-		return "Proyecto guardado.";
+		return new ResponseEntity(new String("Proyecto actualizado."), HttpStatus.CREATED);
 	}
 	
 	@DeleteMapping("/delete/{id}")
-	public String deleteProyecto (@PathVariable Long id) {
+	public ResponseEntity<?> deleteProyecto (@PathVariable Long id) {
+        if(!proyectoService.existsById(id)) {
+            return new ResponseEntity(new Mensaje("No existe en la base de datos."), HttpStatus.NOT_FOUND);
+            }
 		proyectoService.deleteProyecto(id);
-		return "Proyecto eliminado.";
+		return new ResponseEntity("Proyecto eliminado.", HttpStatus.OK);
 	}
 }

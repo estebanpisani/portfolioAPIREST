@@ -63,6 +63,10 @@ public class TrabajoService{
 		return null;
 	}
 
+	public Boolean existsById(Long id) {
+		return trabajoRepo.existsById(id);
+	}
+	
 	public void deleteTrabajo(Long id) {
 		trabajoRepo.deleteById(id);
 	}

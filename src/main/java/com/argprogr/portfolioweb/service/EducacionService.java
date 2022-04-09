@@ -25,11 +25,13 @@ public class EducacionService{
 	@Autowired
 	PersonaRepository personaRepo;
 
-public void saveEducacion(EducacionDTO dto, Long idPersona) {
+public void saveEducacion(EducacionDTO dto) {
 	Educacion educacion = mapper.DTO2Entity(dto);
-	Persona persona = personaRepo.getById(idPersona);
+	// TODO Esto para cuando se puedan crear distintos perfiles de Usuario.
+	Persona persona = personaRepo.getById((long) 1);
 	educacion.setPersona(persona);
 	persona.getFormaciones().add(educacion);
+
 	educacionRepo.save(educacion);
 }
 
@@ -56,6 +58,10 @@ public List<EducacionDTO> getEducaciones(Long id) {
 
 public Educacion findPersona(Long id) {
 	return educacionRepo.findById(id).orElse(null);
+}
+
+public Boolean existsById(Long id) {
+	return educacionRepo.existsById(id);
 }
 
 public void deleteEducacion(Long id) {
