@@ -68,7 +68,7 @@ public class EducacionController {
 			@RequestBody EducacionDTO dto) {
 		
         if(!educacionService.existsById(id)) {
-            return new ResponseEntity(new Mensaje("No existe en la base de datos."), HttpStatus.NOT_FOUND);
+            return new ResponseEntity(new Mensaje("No existe en la base de datos."), HttpStatus.BAD_REQUEST);
             }
         
         if(!StringUtils.hasText(dto.getNombreInstituto())) {
@@ -81,7 +81,7 @@ public class EducacionController {
             } 
 
 		educacionService.updateEducacion(id, dto);
-		return new ResponseEntity(new String("Estudio actualizado."), HttpStatus.OK);
+		return new ResponseEntity(new Mensaje("Estudio actualizado."), HttpStatus.OK);
 	}
 	
 	@DeleteMapping("/delete/{id}")
@@ -90,7 +90,7 @@ public class EducacionController {
             return new ResponseEntity(new Mensaje("No existe en la base de datos."), HttpStatus.NOT_FOUND);
             }
 		educacionService.deleteEducacion(id);
-		return new ResponseEntity(new String("Estudio eliminado."), HttpStatus.OK);
+		return new ResponseEntity(new Mensaje("Estudio eliminado."), HttpStatus.OK);
 	}
 
 }

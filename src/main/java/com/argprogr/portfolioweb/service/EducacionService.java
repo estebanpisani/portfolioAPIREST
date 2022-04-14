@@ -43,7 +43,7 @@ public void updateEducacion(Long id, EducacionDTO dto) {
 	educacion.setDescripcion(dto.getDescripcion());
 	educacion.setWebsiteURL(dto.getWebsiteURL());
 	
-	DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy/MM/dd");
+	DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 	LocalDate inicio = LocalDate.parse(dto.getFechaInicio(), formatter );
 	LocalDate fin = LocalDate.parse(dto.getFechaFin(), formatter );
 	educacion.setFechaInicio(inicio);
