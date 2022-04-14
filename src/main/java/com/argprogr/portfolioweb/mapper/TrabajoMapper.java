@@ -22,9 +22,12 @@ public class TrabajoMapper{
 		dto.setPuesto(trabajo.getPuesto());
 		dto.setDescripcion(trabajo.getDescripcion());
 		dto.setWebsiteURL(trabajo.getWebsiteURL());
-		dto.setFechaInicio(trabajo.getFechaInicio().toString());
-		dto.setFechaFin(trabajo.getFechaFin().toString());
-		
+		if(trabajo.getFechaInicio()!=null) {
+			dto.setFechaInicio(trabajo.getFechaInicio().toString());			
+		}
+		if(trabajo.getFechaFin()!=null) {
+			dto.setFechaFin(trabajo.getFechaFin().toString());			
+		}			
 		return dto;
 	}
 	
@@ -36,13 +39,15 @@ public class TrabajoMapper{
 		trabajo.setPuesto(dto.getPuesto());
 		trabajo.setDescripcion(dto.getDescripcion());
 		trabajo.setWebsiteURL(dto.getWebsiteURL());
-		
 		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-		LocalDate inicio = LocalDate.parse(dto.getFechaInicio(), formatter );
-		LocalDate fin = LocalDate.parse(dto.getFechaFin(), formatter );
-		trabajo.setFechaInicio(inicio);
-		trabajo.setFechaFin(fin);
-		
+		if(dto.getFechaInicio()!=null && !dto.getFechaInicio().isEmpty()) {
+			LocalDate inicio = LocalDate.parse(dto.getFechaInicio(), formatter );		
+			trabajo.setFechaInicio(inicio);
+		}
+		if(dto.getFechaInicio()!=null && !dto.getFechaInicio().isEmpty()) {
+			LocalDate fin = LocalDate.parse(dto.getFechaFin(), formatter );	
+			trabajo.setFechaFin(fin);
+		}
 		return trabajo;
 	}
 

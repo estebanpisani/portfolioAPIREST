@@ -21,8 +21,10 @@ public class EducacionMapper {
 		dto.setNombreInstituto(educacion.getNombreInstituto());
 		dto.setCurso(educacion.getCurso());
 		dto.setDescripcion(educacion.getDescripcion());
-		dto.setFechaInicio(educacion.getFechaInicio().toString());
-		dto.setFechaFin(educacion.getFechaFin().toString());
+		if(educacion.getFechaInicio()!=null) {
+		dto.setFechaInicio(educacion.getFechaInicio().toString());}
+		if(educacion.getFechaFin()!=null) {
+		dto.setFechaFin(educacion.getFechaFin().toString());}
 		dto.setWebsiteURL(educacion.getWebsiteURL());
 		return dto;		
 	}
@@ -36,11 +38,19 @@ public class EducacionMapper {
 		educacion.setDescripcion(dto.getDescripcion());
 		educacion.setCurso(dto.getCurso());
 		educacion.setWebsiteURL(dto.getWebsiteURL());
-		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-		LocalDate inicio = LocalDate.parse(dto.getFechaInicio(), formatter );
-		LocalDate fin = LocalDate.parse(dto.getFechaFin(), formatter );
-		educacion.setFechaInicio(inicio);
-		educacion.setFechaFin(fin);
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");	
+		if (dto.getFechaInicio()!=null && !dto.getFechaInicio().isEmpty()) {
+			LocalDate inicio = LocalDate.parse(dto.getFechaInicio(), formatter );
+			educacion.setFechaInicio(inicio);
+		}else {
+			educacion.setFechaInicio(null);
+		}
+		if (dto.getFechaFin()!=null && !dto.getFechaFin().isEmpty()) {
+			LocalDate fin = LocalDate.parse(dto.getFechaFin(), formatter );
+			educacion.setFechaFin(fin);		
+		}else {
+			educacion.setFechaFin(null);
+		}
 		return educacion;	
 	}
 	

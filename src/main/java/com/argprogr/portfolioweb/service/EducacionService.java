@@ -44,11 +44,19 @@ public void updateEducacion(Long id, EducacionDTO dto) {
 	educacion.setWebsiteURL(dto.getWebsiteURL());
 	
 	DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-	LocalDate inicio = LocalDate.parse(dto.getFechaInicio(), formatter );
-	LocalDate fin = LocalDate.parse(dto.getFechaFin(), formatter );
-	educacion.setFechaInicio(inicio);
-	educacion.setFechaFin(fin);
-	
+	if (dto.getFechaInicio()!=null && !dto.getFechaInicio().isEmpty()) {
+		LocalDate inicio = LocalDate.parse(dto.getFechaInicio(), formatter );
+		educacion.setFechaInicio(inicio);
+	}else {
+		educacion.setFechaInicio(null);
+	}
+	if (dto.getFechaFin()!=null && !dto.getFechaFin().isEmpty()) {
+		LocalDate fin = LocalDate.parse(dto.getFechaFin(), formatter );
+		educacion.setFechaFin(fin);		
+	}else {
+		educacion.setFechaFin(null);
+	}
+
 	educacionRepo.save(educacion);
 }
 

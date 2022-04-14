@@ -42,10 +42,18 @@ public class TrabajoService{
 		trabajo.setWebsiteURL(dto.getWebsiteURL());
 		
 		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-		LocalDate inicio = LocalDate.parse(dto.getFechaInicio(), formatter );
+		if(dto.getFechaInicio()!=null && !dto.getFechaInicio().isEmpty()) {
+			LocalDate inicio = LocalDate.parse(dto.getFechaInicio(), formatter );
+			trabajo.setFechaInicio(inicio);
+		}else {
+			trabajo.setFechaInicio(null);
+		}
+		if(dto.getFechaFin()!=null && !dto.getFechaFin().isEmpty()) {
 		LocalDate fin = LocalDate.parse(dto.getFechaFin(), formatter );
-		trabajo.setFechaInicio(inicio);
 		trabajo.setFechaFin(fin);
+		}else {
+			trabajo.setFechaFin(null);
+		}
 		
 		trabajoRepo.save(trabajo);
 	}

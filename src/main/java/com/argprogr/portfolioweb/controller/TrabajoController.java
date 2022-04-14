@@ -58,6 +58,10 @@ public class TrabajoController {
             return new ResponseEntity(
             		new Mensaje("Ingrese el nombre de la empresa o lugar de trabajo"), HttpStatus.BAD_REQUEST);
             }
+        if(!StringUtils.hasText(dto.getPuesto())) {
+            return new ResponseEntity(
+            		new Mensaje("Ingrese el puesto que tenía en "+dto.getNombreEmpresa()), HttpStatus.BAD_REQUEST);
+            }
 		trabajoService.saveTrabajo(dto, (long) 1);
 		return new ResponseEntity(new Mensaje("Trabajo guardado."), HttpStatus.OK);
 	}

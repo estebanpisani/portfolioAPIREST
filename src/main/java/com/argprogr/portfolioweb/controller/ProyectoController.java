@@ -72,7 +72,7 @@ public class ProyectoController {
             } 		
 		
 		proyectoService.updateProyecto(id, dto);
-		return new ResponseEntity(new String("Proyecto actualizado."), HttpStatus.CREATED);
+		return new ResponseEntity(new Mensaje("Proyecto actualizado."), HttpStatus.CREATED);
 	}
 	
 	@DeleteMapping("/delete/{id}")
