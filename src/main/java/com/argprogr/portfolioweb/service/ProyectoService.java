@@ -43,8 +43,8 @@ public class ProyectoService{
 		return mapper.EntityList2DTOList(proyectoRepo.findByPersona(personaRepo.getById(id)));
 	}
 
-	public Proyecto findProyecto(Long id) {
-		return proyectoRepo.findById(id).orElse(null);
+	public ProyectoDTO findProyecto(Long id) {		
+		return mapper.Entity2DTO(proyectoRepo.findById(id).orElse(null));
 	}
 	
 	public Boolean existsById(Long id) {

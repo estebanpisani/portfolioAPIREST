@@ -25,26 +25,26 @@ public class JWTAuthenticationFilter extends OncePerRequestFilter {
 	@Override
 	protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
 			throws ServletException, IOException {
-		// Obtener el token de la solicitud HTTP
-		String token = getJWTFromRequest(request);
-		// Validar Token
-		try {
-			if(StringUtils.hasText(token) && jwtTokenProvider.validateToken(token)) {
-				// Obtener el username del token
-				String username = jwtTokenProvider.getUsernameFromToken(token);
-				// Cargar usuario asociado al Token
-				UserDetails userDetails = customUserDetailsService.loadUserByUsername(username);
-				UsernamePasswordAuthenticationToken authenticationToken = 
-						new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
-				authenticationToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
-				//Establecer seguridad
-				SecurityContextHolder.getContext().setAuthentication(authenticationToken);	
+			// Obtener el token de la solicitud HTTP
+			String token = getJWTFromRequest(request);
+			// Validar Token
+			try {
+				if(StringUtils.hasText(token) && jwtTokenProvider.validateToken(token)) {
+					// Obtener el username del token
+					String username = jwtTokenProvider.getUsernameFromToken(token);
+					// Cargar usuario asociado al Token
+					UserDetails userDetails = customUserDetailsService.loadUserByUsername(username);
+					UsernamePasswordAuthenticationToken authenticationToken = 
+							new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
+					authenticationToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
+					//Establecer seguridad
+					SecurityContextHolder.getContext().setAuthentication(authenticationToken);	
+				}
+				filterChain.doFilter(request, response);
+			} catch (Exception e) {
+				System.out.println(e.getMessage());
+				System.out.println("Fail en método doFilterInternal");
 			}
-			filterChain.doFilter(request, response);
-		} catch (Exception e) {
-			e.getMessage();
-			System.out.println("Fail en método doFilterInternal");
-		}
 	}
 	
 	//Bearer token de acceso

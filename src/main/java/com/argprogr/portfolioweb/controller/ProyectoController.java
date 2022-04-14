@@ -28,11 +28,21 @@ public class ProyectoController {
 	@Autowired
 	ProyectoService proyectoService;
 	
+	@GetMapping("/{id}")
+	public ResponseEntity<ProyectoDTO> getProyecto(@PathVariable Long id){
+		ProyectoDTO dto = proyectoService.findProyecto(id);
+		
+		if(dto==null) {
+			return new ResponseEntity(new Mensaje("Proyecto no encontrado."), HttpStatus.BAD_REQUEST);
+		}
+		return new ResponseEntity(dto, HttpStatus.OK);
+	}
+	
 	@GetMapping("/list")
 	public ResponseEntity<List<ProyectoDTO>> getProyectos(){
 		List<ProyectoDTO> list = proyectoService.getProyectos((long) 1);
 		if(list.isEmpty()) {
-			return new ResponseEntity(new Mensaje("Aún no ha agregado proyectos."), HttpStatus.OK);
+			return new ResponseEntity(new Mensaje("Aún no ha agregado proyectos."), HttpStatus.BAD_REQUEST);
 		}
 		return new ResponseEntity(list, HttpStatus.OK);
 	}
@@ -46,7 +56,7 @@ public class ProyectoController {
             }   
         
         proyectoService.saveProyecto(dto, (long) 1);
-		return new ResponseEntity(new String("Proyecto guardado."), HttpStatus.CREATED);
+		return new ResponseEntity(new Mensaje("Proyecto guardado."), HttpStatus.OK);
 
 	}
 

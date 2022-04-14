@@ -16,9 +16,7 @@ public class JWTAuthenticationEntryPoint implements AuthenticationEntryPoint {
 	@Override
 	public void commence(HttpServletRequest request, HttpServletResponse response,
 			AuthenticationException authException) throws IOException, ServletException {
-		
-		response.sendError(HttpServletResponse.SC_UNAUTHORIZED, "No autorizado.");
-		
+		response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Usuario incorrecto.");		
 	}
 
 }

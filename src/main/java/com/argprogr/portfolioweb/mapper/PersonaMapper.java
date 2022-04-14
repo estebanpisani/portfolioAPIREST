@@ -25,9 +25,12 @@ public class PersonaMapper {
 		dto.setEmail(persona.getEmail());
 		dto.setDescripcion(persona.getDescripcion());
 		dto.setTelefono(persona.getTelefono());
+		dto.setCiudad(persona.getCiudad());
+		dto.setPais(persona.getPais());
 		dto.setFechaNac(persona.getFechaNac().toString());
 		dto.setRepoURL(persona.getRepoURL());
 		dto.setLinkedInURL(persona.getLinkedInURL());
+		dto.setWebsiteURL(persona.getWebsiteURL());
 		dto.setFotoURL(persona.getFotoURL());
 		return dto;
 	}
@@ -42,14 +45,16 @@ public class PersonaMapper {
 		persona.setEmail(dto.getEmail());
 		persona.setDescripcion(dto.getDescripcion());
 		persona.setTelefono(dto.getTelefono());
+		persona.setCiudad(dto.getCiudad());
+		persona.setPais(dto.getPais());
 		persona.setRepoURL(dto.getRepoURL());
 		persona.setLinkedInURL(dto.getLinkedInURL());
 		persona.setFotoURL(dto.getFotoURL());
-		
-		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy/MM/dd");
-		LocalDate localDate = LocalDate.parse(dto.getFechaNac(), formatter );
-		persona.setFechaNac(localDate);
-		
+		if (dto.getFechaNac()!=null) {
+			DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy/MM/dd");
+			LocalDate localDate = LocalDate.parse(dto.getFechaNac(), formatter );
+			persona.setFechaNac(localDate);
+		}
 		return persona;
 	}
 	

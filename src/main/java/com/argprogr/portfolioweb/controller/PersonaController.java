@@ -28,8 +28,14 @@ public class PersonaController {
 	PersonaService personaService;
 	
 	@GetMapping()
-	public PersonaDTO getPersona(){
-		return personaService.findPersona((long) 1);
+	public ResponseEntity<PersonaDTO> getPersona(){
+		PersonaDTO dto = personaService.findPersona((long) 1);
+		if (dto!=null) {
+			return new ResponseEntity(dto, HttpStatus.OK);
+		}else {
+			return new ResponseEntity(dto, HttpStatus.BAD_REQUEST);
+		}
+		
 	}
 	/*
 	@PreAuthorize("hasAnyRole('ROLE_ADMIN')")
@@ -40,6 +46,7 @@ public class PersonaController {
 	}
 	*/
 	
+	@PreAuthorize("hasAnyRole('ROLE_ADMIN')")	
 	@PutMapping("/edit")
 	public ResponseEntity<?> updatePersona (@RequestBody PersonaDTO dto) {
 	      if(!StringUtils.hasText(dto.getNombre())) {

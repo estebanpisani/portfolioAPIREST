@@ -56,8 +56,12 @@ public List<EducacionDTO> getEducaciones(Long id) {
 	return mapper.EntityList2DTOList(educacionRepo.findByPersona(personaRepo.getById(id)));
 }
 
-public Educacion findPersona(Long id) {
-	return educacionRepo.findById(id).orElse(null);
+public EducacionDTO findEducacion(Long id) {
+	Educacion educacion = educacionRepo.findById(id).orElse(null);
+	if(educacion!=null) {
+		return mapper.Entity2DTO(educacion);
+	}
+	return null;
 }
 
 public Boolean existsById(Long id) {

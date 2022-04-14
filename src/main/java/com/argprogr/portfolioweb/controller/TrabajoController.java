@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.argprogr.portfolioweb.dto.Mensaje;
+import com.argprogr.portfolioweb.dto.ProyectoDTO;
 import com.argprogr.portfolioweb.dto.TrabajoDTO;
 import com.argprogr.portfolioweb.model.Persona;
 import com.argprogr.portfolioweb.model.Trabajo;
@@ -32,11 +33,21 @@ public class TrabajoController {
 	@Autowired
 	TrabajoService trabajoService;
 	
+	@GetMapping("/{id}")
+	public ResponseEntity<TrabajoDTO> getTrabajo(@PathVariable Long id){
+		TrabajoDTO dto = trabajoService.findTrabajo(id);
+		
+		if(dto==null) {
+			return new ResponseEntity(new Mensaje("Trabajo no encontrado."), HttpStatus.BAD_REQUEST);
+		}
+		return new ResponseEntity(dto, HttpStatus.OK);
+	}
+	
 	@GetMapping("/list")
 	public ResponseEntity<List<TrabajoDTO>> getTrabajos(){
 		List<TrabajoDTO> list = trabajoService.getTrabajosById((long) 1);
 		if(list.isEmpty()) {
-			return new ResponseEntity(new Mensaje("Aún no ha agregado experiencias laborales."), HttpStatus.OK);
+			return new ResponseEntity(new Mensaje("Aún no ha agregado experiencias laborales."), HttpStatus.BAD_REQUEST);
 		}
 		return new ResponseEntity(list, HttpStatus.OK);
 	}

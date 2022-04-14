@@ -42,6 +42,8 @@ public class Persona {
 	@Lob
 	private String descripcion;
 	private String telefono;
+	private String ciudad;
+	private String pais;
 	private LocalDate fechaNac;
 	private String repoURL;
 	private String linkedInURL;

@@ -14,6 +14,8 @@ public class PersonaDTO {
 	private String email;
 	private String descripcion;
 	private String telefono;
+	private String ciudad;
+	private String pais;
 	private String fechaNac;
 	private String repoURL;
 	private String linkedInURL;

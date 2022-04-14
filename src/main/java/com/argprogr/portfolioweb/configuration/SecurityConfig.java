@@ -68,7 +68,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 		.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
 		.and()		
 		.authorizeRequests() // Configurar autorización
-		.antMatchers(HttpMethod.GET, "/api/**").permitAll()	//Autoriza recursos a cualquiera
+		.antMatchers(HttpMethod.GET, "/api/**").permitAll() //	Autoriza recursos a cualquiera
 		.antMatchers("/api/auth/**").permitAll()
 		.anyRequest().authenticated(); //Cualquier otro tiene que ser autenticado.
 		

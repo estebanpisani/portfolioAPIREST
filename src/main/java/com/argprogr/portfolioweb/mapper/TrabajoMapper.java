@@ -37,7 +37,7 @@ public class TrabajoMapper{
 		trabajo.setDescripcion(dto.getDescripcion());
 		trabajo.setWebsiteURL(dto.getWebsiteURL());
 		
-		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy/MM/dd");
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 		LocalDate inicio = LocalDate.parse(dto.getFechaInicio(), formatter );
 		LocalDate fin = LocalDate.parse(dto.getFechaFin(), formatter );
 		trabajo.setFechaInicio(inicio);

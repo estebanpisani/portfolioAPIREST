@@ -1,5 +1,7 @@
 package com.argprogr.portfolioweb.service;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,10 +35,18 @@ public class PersonaService{
 		persona.setDescripcion(dto.getDescripcion());
 		persona.setDireccion(dto.getDireccion());
 		persona.setTelefono(dto.getTelefono());
+		persona.setCiudad(dto.getCiudad());
+		persona.setPais(dto.getPais());
 		persona.setEmail(dto.getEmail());
 		persona.setLinkedInURL(dto.getLinkedInURL());
 		persona.setRepoURL(dto.getRepoURL());
 		persona.setWebsiteURL(dto.getWebsiteURL());
+		persona.setFotoURL(dto.getFotoURL());
+		if (dto.getFechaNac()!=null) {
+			DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy/MM/dd");
+			LocalDate localDate = LocalDate.parse(dto.getFechaNac(), formatter );
+			persona.setFechaNac(localDate);
+		}
 		personaRepo.save(persona);
 	}
 	
