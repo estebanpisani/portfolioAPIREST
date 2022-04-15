@@ -1,6 +1,7 @@
 package com.argprogr.portfolioweb.mapper;
 
 import java.time.LocalDate;
+import java.time.YearMonth;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
@@ -23,10 +24,10 @@ public class TrabajoMapper{
 		dto.setDescripcion(trabajo.getDescripcion());
 		dto.setWebsiteURL(trabajo.getWebsiteURL());
 		if(trabajo.getFechaInicio()!=null) {
-			dto.setFechaInicio(trabajo.getFechaInicio().toString());			
+			dto.setFechaInicio(trabajo.getFechaInicio().format(DateTimeFormatter.ofPattern("MM/yyyy")));			
 		}
 		if(trabajo.getFechaFin()!=null) {
-			dto.setFechaFin(trabajo.getFechaFin().toString());			
+			dto.setFechaFin(trabajo.getFechaFin().format(DateTimeFormatter.ofPattern("MM/yyyy")));			
 		}			
 		return dto;
 	}
@@ -41,6 +42,7 @@ public class TrabajoMapper{
 		trabajo.setWebsiteURL(dto.getWebsiteURL());
 		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 		if(dto.getFechaInicio()!=null && !dto.getFechaInicio().isEmpty()) {
+			//LocalDate inicio = YearMonth.parse(dto.getFechaInicio(), formatter).atDay(1);
 			LocalDate inicio = LocalDate.parse(dto.getFechaInicio(), formatter );		
 			trabajo.setFechaInicio(inicio);
 		}

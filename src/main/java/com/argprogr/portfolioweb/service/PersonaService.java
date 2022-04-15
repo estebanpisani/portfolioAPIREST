@@ -43,7 +43,7 @@ public class PersonaService{
 		persona.setWebsiteURL(dto.getWebsiteURL());
 		persona.setFotoURL(dto.getFotoURL());
 		if (dto.getFechaNac()!=null) {
-			DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy/MM/dd");
+			DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
 			LocalDate localDate = LocalDate.parse(dto.getFechaNac(), formatter );
 			persona.setFechaNac(localDate);
 		}

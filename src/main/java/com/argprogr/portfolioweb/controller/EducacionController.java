@@ -87,7 +87,7 @@ public class EducacionController {
 	@DeleteMapping("/delete/{id}")
 	public ResponseEntity<?> deleteEducacion (@PathVariable Long id) {
         if(!educacionService.existsById(id)) {
-            return new ResponseEntity(new Mensaje("No existe en la base de datos."), HttpStatus.NOT_FOUND);
+            return new ResponseEntity(new Mensaje("No existe en la base de datos."), HttpStatus.BAD_REQUEST);
             }
 		educacionService.deleteEducacion(id);
 		return new ResponseEntity(new Mensaje("Estudio eliminado."), HttpStatus.OK);

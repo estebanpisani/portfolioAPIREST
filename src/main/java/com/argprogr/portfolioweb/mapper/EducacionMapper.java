@@ -2,6 +2,7 @@ package com.argprogr.portfolioweb.mapper;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.time.format.FormatStyle;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -21,10 +22,15 @@ public class EducacionMapper {
 		dto.setNombreInstituto(educacion.getNombreInstituto());
 		dto.setCurso(educacion.getCurso());
 		dto.setDescripcion(educacion.getDescripcion());
+		
 		if(educacion.getFechaInicio()!=null) {
-		dto.setFechaInicio(educacion.getFechaInicio().toString());}
+		dto.setFechaInicio(educacion.getFechaInicio().format(DateTimeFormatter.ofPattern("MM/yy")));
+		}
+		
 		if(educacion.getFechaFin()!=null) {
-		dto.setFechaFin(educacion.getFechaFin().toString());}
+		dto.setFechaFin(educacion.getFechaFin().format(DateTimeFormatter.ofPattern("MM/yy")));
+		}
+		
 		dto.setWebsiteURL(educacion.getWebsiteURL());
 		return dto;		
 	}

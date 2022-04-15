@@ -1,6 +1,7 @@
 package com.argprogr.portfolioweb.service;
 
 import java.time.LocalDate;
+import java.time.YearMonth;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 
@@ -42,8 +43,11 @@ public class TrabajoService{
 		trabajo.setWebsiteURL(dto.getWebsiteURL());
 		
 		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+		
+		
 		if(dto.getFechaInicio()!=null && !dto.getFechaInicio().isEmpty()) {
-			LocalDate inicio = LocalDate.parse(dto.getFechaInicio(), formatter );
+			//LocalDate inicio = YearMonth.parse(dto.getFechaInicio(), formatter).atDay(1);
+			LocalDate inicio = LocalDate.parse(dto.getFechaInicio(), formatter);
 			trabajo.setFechaInicio(inicio);
 		}else {
 			trabajo.setFechaInicio(null);

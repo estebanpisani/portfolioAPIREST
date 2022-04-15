@@ -27,7 +27,7 @@ public class PersonaMapper {
 		dto.setTelefono(persona.getTelefono());
 		dto.setCiudad(persona.getCiudad());
 		dto.setPais(persona.getPais());
-		dto.setFechaNac(persona.getFechaNac().toString());
+		dto.setFechaNac(persona.getFechaNac().format(DateTimeFormatter.ofPattern("dd/MM/yyyy")));
 		dto.setRepoURL(persona.getRepoURL());
 		dto.setLinkedInURL(persona.getLinkedInURL());
 		dto.setWebsiteURL(persona.getWebsiteURL());

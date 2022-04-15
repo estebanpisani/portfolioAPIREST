@@ -57,8 +57,12 @@ public class PersonaController {
 	        }
 	      
 		personaService.updatePersona((long) 1, dto);
-		return new ResponseEntity("Persona editada", HttpStatus.OK);
+		return new ResponseEntity(new Mensaje("Persona editada"), HttpStatus.OK);
 	}
+	
+	
+	
+	
 	
 	@PreAuthorize("hasAnyRole('ROLE_ADMIN')")
 	@DeleteMapping("/delete/{id}")
