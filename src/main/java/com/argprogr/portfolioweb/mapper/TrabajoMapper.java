@@ -24,10 +24,10 @@ public class TrabajoMapper{
 		dto.setDescripcion(trabajo.getDescripcion());
 		dto.setWebsiteURL(trabajo.getWebsiteURL());
 		if(trabajo.getFechaInicio()!=null) {
-			dto.setFechaInicio(trabajo.getFechaInicio().format(DateTimeFormatter.ofPattern("MM/yyyy")));			
+			dto.setFechaInicio(trabajo.getFechaInicio().format(DateTimeFormatter.ofPattern("yyyy-MM-dd")));			
 		}
 		if(trabajo.getFechaFin()!=null) {
-			dto.setFechaFin(trabajo.getFechaFin().format(DateTimeFormatter.ofPattern("MM/yyyy")));			
+			dto.setFechaFin(trabajo.getFechaFin().format(DateTimeFormatter.ofPattern("yyyy-MM-dd")));			
 		}			
 		return dto;
 	}
@@ -46,7 +46,7 @@ public class TrabajoMapper{
 			LocalDate inicio = LocalDate.parse(dto.getFechaInicio(), formatter );		
 			trabajo.setFechaInicio(inicio);
 		}
-		if(dto.getFechaInicio()!=null && !dto.getFechaInicio().isEmpty()) {
+		if(dto.getFechaFin() !=null && !dto.getFechaFin().isEmpty()) {
 			LocalDate fin = LocalDate.parse(dto.getFechaFin(), formatter );	
 			trabajo.setFechaFin(fin);
 		}

@@ -47,14 +47,11 @@ public void updateEducacion(Long id, EducacionDTO dto) {
 	if (dto.getFechaInicio()!=null && !dto.getFechaInicio().isEmpty()) {
 		LocalDate inicio = LocalDate.parse(dto.getFechaInicio(), formatter );
 		educacion.setFechaInicio(inicio);
-	}else {
-		educacion.setFechaInicio(null);
 	}
+	
 	if (dto.getFechaFin()!=null && !dto.getFechaFin().isEmpty()) {
 		LocalDate fin = LocalDate.parse(dto.getFechaFin(), formatter );
 		educacion.setFechaFin(fin);		
-	}else {
-		educacion.setFechaFin(null);
 	}
 
 	educacionRepo.save(educacion);

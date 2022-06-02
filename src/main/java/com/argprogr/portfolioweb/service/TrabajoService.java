@@ -49,14 +49,10 @@ public class TrabajoService{
 			//LocalDate inicio = YearMonth.parse(dto.getFechaInicio(), formatter).atDay(1);
 			LocalDate inicio = LocalDate.parse(dto.getFechaInicio(), formatter);
 			trabajo.setFechaInicio(inicio);
-		}else {
-			trabajo.setFechaInicio(null);
 		}
 		if(dto.getFechaFin()!=null && !dto.getFechaFin().isEmpty()) {
 		LocalDate fin = LocalDate.parse(dto.getFechaFin(), formatter );
 		trabajo.setFechaFin(fin);
-		}else {
-			trabajo.setFechaFin(null);
 		}
 		
 		trabajoRepo.save(trabajo);

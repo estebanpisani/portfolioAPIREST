@@ -24,11 +24,11 @@ public class EducacionMapper {
 		dto.setDescripcion(educacion.getDescripcion());
 		
 		if(educacion.getFechaInicio()!=null) {
-		dto.setFechaInicio(educacion.getFechaInicio().format(DateTimeFormatter.ofPattern("MM/yy")));
+		dto.setFechaInicio(educacion.getFechaInicio().format(DateTimeFormatter.ofPattern("yyyy-MM-dd")));
 		}
 		
 		if(educacion.getFechaFin()!=null) {
-		dto.setFechaFin(educacion.getFechaFin().format(DateTimeFormatter.ofPattern("MM/yy")));
+		dto.setFechaFin(educacion.getFechaFin().format(DateTimeFormatter.ofPattern("yyyy-MM-dd")));
 		}
 		
 		dto.setWebsiteURL(educacion.getWebsiteURL());
