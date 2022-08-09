@@ -27,7 +27,7 @@ import com.argprogr.portfolioweb.service.TrabajoService;
 
 @RestController
 @RequestMapping("/api/trabajo")
-@CrossOrigin(origins = "http://localhost:4200")
+@CrossOrigin(origins = "https://estebanpisaniportfolio.web.app")
 public class TrabajoController {
 	
 	@Autowired

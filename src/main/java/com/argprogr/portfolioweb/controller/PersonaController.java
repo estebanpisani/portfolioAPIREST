@@ -21,7 +21,7 @@ import com.argprogr.portfolioweb.service.PersonaService;
 
 @RestController
 @RequestMapping("/api/persona")
-@CrossOrigin(origins = "http://localhost:4200")
+@CrossOrigin(origins = "https://estebanpisaniportfolio.web.app")
 public class PersonaController {
 	
 	@Autowired

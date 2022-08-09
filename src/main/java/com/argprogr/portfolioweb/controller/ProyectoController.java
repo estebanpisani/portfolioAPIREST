@@ -22,7 +22,7 @@ import com.argprogr.portfolioweb.service.ProyectoService;
 
 @RestController
 @RequestMapping("/api/proyecto")
-@CrossOrigin(origins = "http://localhost:4200")
+@CrossOrigin(origins = "https://estebanpisaniportfolio.web.app")
 public class ProyectoController {
 
 	@Autowired

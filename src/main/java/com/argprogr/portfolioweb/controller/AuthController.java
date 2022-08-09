@@ -29,7 +29,7 @@ import com.argprogr.portfolioweb.service.UsuarioService;
 
 
 @RestController
-@CrossOrigin(origins = "http://localhost:4200")
+@CrossOrigin(origins = "https://estebanpisaniportfolio.web.app")
 @RequestMapping("/api/auth")
 public class AuthController {
 	
