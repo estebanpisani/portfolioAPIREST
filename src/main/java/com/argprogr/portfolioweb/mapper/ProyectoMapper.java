@@ -18,6 +18,7 @@ public class ProyectoMapper {
 		dto.setNombreProyecto(proyecto.getNombreProyecto());
 		dto.setDescripcion(proyecto.getDescripcion());
 		dto.setWebsiteURL(proyecto.getWebsiteURL());
+		dto.setRepoURL(proyecto.getRepoURL());
 		return dto;
 	}
 	
@@ -27,6 +28,7 @@ public class ProyectoMapper {
 		proyecto.setNombreProyecto(dto.getNombreProyecto());
 		proyecto.setDescripcion(dto.getDescripcion());
 		proyecto.setWebsiteURL(dto.getWebsiteURL());
+		proyecto.setRepoURL(dto.getRepoURL());
 		return proyecto;				
 	}
 

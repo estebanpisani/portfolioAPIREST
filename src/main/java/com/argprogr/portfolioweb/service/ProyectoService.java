@@ -35,6 +35,7 @@ public class ProyectoService{
 		proyecto.setNombreProyecto(dto.getNombreProyecto());
 		proyecto.setDescripcion(dto.getDescripcion());
 		proyecto.setWebsiteURL(dto.getWebsiteURL());
+		proyecto.setRepoURL(dto.getRepoURL());
 		proyectoRepo.save(proyecto);	
 	}
 

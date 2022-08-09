@@ -25,6 +25,7 @@ public class Proyecto {
 	@Lob
 	private String descripcion;
 	private String websiteURL;
+	private String repoURL;
 	
 	@ManyToOne(cascade = CascadeType.MERGE, fetch = FetchType.LAZY)
 	@JoinColumn(name = "fk_persona")

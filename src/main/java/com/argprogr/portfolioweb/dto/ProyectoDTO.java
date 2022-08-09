@@ -8,4 +8,5 @@ public class ProyectoDTO {
 	private String nombreProyecto;
 	private String descripcion;
 	private String websiteURL;
+	private String repoURL;
 }
