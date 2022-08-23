@@ -1,8 +1,6 @@
 package com.argprogr.portfolioweb.controller;
 
-import java.util.HashSet;
-import java.util.Set;
-
+import com.argprogr.portfolioweb.security.CustomUserDetailsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -33,16 +31,10 @@ import com.argprogr.portfolioweb.service.UsuarioService;
 @RequestMapping("/api/auth")
 public class AuthController {
 	
-    @Autowired
-    PasswordEncoder passwordEncoder;
 	@Autowired
 	AuthenticationManager authenticationManager;
 	@Autowired
-	UsuarioRepository usuarioRepo;
-	@Autowired
-	UsuarioService usuarioService;
-	@Autowired
-	RolService rolService;
+	CustomUserDetailsService userDetailsService;
 	@Autowired
 	JWTTokenProvider tokenProvider;
 	
@@ -66,28 +58,14 @@ public class AuthController {
 		JwtDTO jwtDto = new JwtDTO(token, userDetails.getUsername(), userDetails.getAuthorities()); 
 		return new ResponseEntity(jwtDto, HttpStatus.OK);
 	}
-	
-	/* Sin uso hasta que se puedan armar perfiles de usuario.
-    @PostMapping("/registro")
-    public ResponseEntity<?> registro(@Valid @RequestBody NuevoUsuario nuevoUsuario, BindingResult bindingResult){
-        if(bindingResult.hasErrors())
-            return new ResponseEntity(new Mensaje("campos mal puestos o email inválido"), HttpStatus.BAD_REQUEST);
-        if(usuarioService.existsByNombreUsuario(nuevoUsuario.getNombreUsuario()))
-            return new ResponseEntity(new Mensaje("ese nombre ya existe"), HttpStatus.BAD_REQUEST);
-        if(usuarioService.existsByEmail(nuevoUsuario.getEmail()))
-            return new ResponseEntity(new Mensaje("ese email ya existe"), HttpStatus.BAD_REQUEST);
-        Usuario usuario =
-                new Usuario(nuevoUsuario.getNombre(), nuevoUsuario.getNombreUsuario(), nuevoUsuario.getEmail(),
-                        passwordEncoder.encode(nuevoUsuario.getPassword()));
-        Set<Rol> roles = new HashSet<>();
-        roles.add(rolService.getByRolNombre(RolNombre.ROLE_USER).get());
-        if(nuevoUsuario.getRoles().contains("admin"))
-            roles.add(rolService.getByRolNombre(RolNombre.ROLE_ADMIN).get());
-        usuario.setRoles(roles);
-        usuarioService.save(usuario);
-        return new ResponseEntity(new Mensaje("usuario guardado"), HttpStatus.CREATED);
-    }
 
+	@PostMapping("/signup")
+	public ResponseEntity<?> signUp(@RequestBody UserDTO user) throws Exception{
+		userDetailsService.save(user);
+		return ResponseEntity.status(HttpStatus.CREATED).build();
+	}
+
+	/*
 	//TODO Arreglar. Siempre elimina aunque no encuentre usuario.
 	@PreAuthorize("hasAnyRole('ROLE_ADMIN')")
 	@DeleteMapping("/delete/{id}")
