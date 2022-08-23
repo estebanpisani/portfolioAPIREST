@@ -21,9 +21,9 @@ API REST desarrollada con Spring Boot para [Argentina Programa](https://argentin
 ### Persona
 
 - `[GET] /api/persona`: Obtiene datos personales del dueño del portfolio.
-- `[POST] /api/persona`: Guarda uno nuevo perfil personal (por ahora deshabilitado).
-- `[PUT] /api/persona`: Actualiza los datos del perfil personal.
-- `[DELETE] /persona/:id`: Elimina la información del perfil.
+- `[POST] /api/persona/save`: Guarda uno nuevo perfil personal (por ahora deshabilitado).
+- `[PUT] /api/persona/edit`: Actualiza los datos del perfil personal (por ahora con ID hardcodeado).
+- `[DELETE] /persona/delete/:id`: Elimina la información del perfil.
 
 ### Trabajos
 
